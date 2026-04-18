@@ -2,7 +2,6 @@
 # Arquivos Compilados
 # -----------------------------
 *.exe
-*.dll
 *.bpl
 *.dcp
 *.dcu

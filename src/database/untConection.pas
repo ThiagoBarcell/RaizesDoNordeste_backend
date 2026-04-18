@@ -52,7 +52,13 @@ begin
   FConnection.DriverName := 'PG';
 
   FConnection.LoginPrompt := False;
-  FConnection.Connected := True;
+  try
+    FConnection.Connected := True;
+  except
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+  end;
+
 end;
 
 class procedure TConectarBD.Disconnect;

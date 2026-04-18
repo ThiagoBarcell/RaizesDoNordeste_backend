@@ -7,11 +7,16 @@ program Proj_RaizesDoNordesteAPI;
 uses
   Horse,
   System.SysUtils,
+  Winapi.Windows,
   untRoutes in 'src\routes\untRoutes.pas',
   untConection in 'src\database\untConection.pas';
 
 begin
   try
+    //Aqui faz a carga das DLLs para o postgre, para fazer a conexão com o BD
+    //como o projeto é 64bits, ele se encontra em \Win64\Debug, volta duas e vai pra libs
+    SetDllDirectory(PChar(ExtractFilePath(ParamStr(0)) + '..\..\libs'));
+
     //Faz a conexao com o banco de dados
     TConectarBD.Connect;
 
