@@ -1,10 +1,11 @@
-unit untConection;
+unit untConnection;
 
 interface
 
 uses
   System.SysUtils,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client,
+  untEnv;
 
 type
   TConectarBD = class
@@ -41,17 +42,22 @@ begin
 
   //Limpa os parametros do conection
   FConnection.Params.Clear;
-  FConnection.Params.Add('Server=localhost');
-  FConnection.Params.Add('Port=9900');
-  FConnection.Params.Add('Database=RaizesDoNordesteDB');
-  FConnection.Params.Add('User_Name=postgres');
-  FConnection.Params.Add('Password=masterkey');
+
+  //Metodo feito para ler o .env, fiz parecido como leria um .ini
+  //Usei o env por ser mais moderno
+  FConnection.Params.Add('Server=' + TEnv.LerEnvPorChave('DB_HOST'));
+  FConnection.Params.Add('Port=' + TEnv.LerEnvPorChave('DB_PORT'));
+  FConnection.Params.Add('Database=' + TEnv.LerEnvPorChave('DB_NAME'));
+  FConnection.Params.Add('User_Name=' + TEnv.LerEnvPorChave('DB_USER'));
+  FConnection.Params.Add('Password=' + TEnv.LerEnvPorChave('DB_PASSWORD'));
   FConnection.Params.Add('CharacterSet=UTF8');
 
   //Define que será Postgre
   FConnection.DriverName := 'PG';
 
+  //Passei esse parametro para não ficar pedindo login
   FConnection.LoginPrompt := False;
+
   try
     FConnection.Connected := True;
   except
