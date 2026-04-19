@@ -16,6 +16,8 @@ Construir uma API backend para uma rede de restaurantes com foco em:
 
 ## Tecnologias utilizadas
 
+---
+
 - Delphi 10.3 Rio
 - Horse
 - Jhonson
@@ -26,6 +28,8 @@ Construir uma API backend para uma rede de restaurantes com foco em:
 - BOSS
 
 ### Pré-requisitos
+
+---
 
 Antes de executar o projeto, é necessário ter instalado:
 
@@ -46,20 +50,23 @@ O projeto utiliza DLLs x64 do PostgreSQL.
 
 ### Como recriar o cenário atual do projeto
 
+---
+
 A sequência abaixo recria o cenário atual completo.
 
-1. Clonar o projeto
+#### 1. Clonar o projeto
+
 git clone https://github.com/ThiagoBarcell/RaizesDoNordeste_backend
 
 Ou baixar o ZIP do projeto e extrair.
 
-2. Abrir o projeto no Delphi
+#### 2. Abrir o projeto no Delphi
 
 Abra o arquivo:
 
 Proj_RaizesDoNordesteAPI.dproj
 
-3. Instalar as dependências com BOSS
+#### 3. Instalar as dependências com BOSS
 
 Na raiz do projeto, usando o cmd , execute:
 
@@ -80,7 +87,7 @@ Observação
 Se o projeto já possuir boss.json e boss-lock.json, o ideal é usar apenas:
 boss install
 
-4. Configurar o arquivo .env
+#### 4. Configurar o arquivo .env
 
 Na raiz do projeto, crie um arquivo chamado:
 
@@ -113,13 +120,13 @@ JWT_SECRET: chave de assinatura do token JWT
 JWT_EXPIRES: tempo de expiração do token
 APP_ENV: ambiente atual
 
-5. Criar o banco de dados no PostgreSQL
+#### 5. Criar o banco de dados no PostgreSQL
 
 No PostgreSQL, crie o banco manualmente:
 
 CREATE DATABASE RaizesDoNordesteDB;
 
-6. Executar as migrations
+#### 6. Executar as migrations
 
 Os scripts SQL estão na pasta:
 
@@ -127,7 +134,7 @@ db/migrations/
 
 Execute na seguinte ordem:
 
-6.1
+#### 6.1
 V001__init.sql
 
 Esse script cria as tabelas principais do sistema:
@@ -142,7 +149,7 @@ pedido_itens
 pagamentos
 logs_auditoria
 
-6.2
+#### 6.2
 V002__seed_roles_unidades_produtos.sql
 
 Esse script insere dados iniciais:
@@ -151,7 +158,7 @@ roles
 unidades
 produtos
 
-6.3
+#### 6.3
 V003__seed_estoque.sql
 
 Esse script insere o estoque inicial por unidade.
@@ -160,7 +167,7 @@ Ferramenta sugerida
 
 As migrations podem ser executadas pelo DBeaver ou qualquer cliente SQL compatível com PostgreSQL.
 
-7. Configurar as DLLs do PostgreSQL
+#### 7. Configurar as DLLs do PostgreSQL
 
 A API usa FireDAC com PostgreSQL, então são necessárias DLLs nativas do PostgreSQL em arquitetura x64.
 
@@ -181,14 +188,14 @@ O projeto está configurado para carregar essas DLLs via SetDllDirectory(...), e
 
 novamente, ja deixei elas commitadas nessa pasta, usar apenas se necessário
 
-8. Compilar em Win64
+#### 8. Compilar em Win64
 
 No Delphi, selecione a plataforma:
 Win64
 
 Isso é obrigatório, pois as DLLs utilizadas são x64.
 
-9. Configurar os diretórios de saída do Delphi
+#### 9. Configurar os diretórios de saída do Delphi
 
 Para deixar o projeto mais organizado, recomenda-se configurar os diretórios de saída.
 
@@ -214,7 +221,7 @@ Execute:
 Clean
 Build
 
-10. Executar a aplicação
+#### 10. Executar a aplicação
 
 Depois de compilar, execute a aplicação pelo Delphi ou pelo executável gerado.
 
