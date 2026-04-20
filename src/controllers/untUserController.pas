@@ -12,8 +12,9 @@ procedure Login(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 implementation
 
 uses
-  System.JSON,
   System.SysUtils,
+  System.JSON,
+  JOSE.Core.JWT,
   untUserService;
 
 procedure Signup(Req: THorseRequest; Res: THorseResponse; Next: TProc);

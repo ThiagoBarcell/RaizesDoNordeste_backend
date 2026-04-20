@@ -18,7 +18,11 @@ uses
   untEnv in 'src\utils\untEnv.pas',
   untJWT in 'src\utils\untJWT.pas',
   untConstantesGlobais in 'src\constantes\untConstantesGlobais.pas',
-  untModeloUsuario in 'src\models\untModeloUsuario.pas';
+  untModeloUsuario in 'src\models\untModeloUsuario.pas',
+  untModeloProduto in 'src\models\untModeloProduto.pas',
+  untProdutoDAO in 'src\DAO\untProdutoDAO.pas',
+  untProdutoService in 'src\services\untProdutoService.pas',
+  untProdutoController in 'src\controllers\untProdutoController.pas';
 
 begin
   try

@@ -10,6 +10,7 @@ type
   public
     class function Signup(const pBody: TJSONObject): TJSONObject;
     class function Login(const pBody: TJSONObject): TJSONObject;
+    class function Usuario(const pUserId: Integer): TJSONObject;
   end;
 
 implementation
@@ -55,6 +56,25 @@ begin
   Result.AddPair('id', TJSONNumber.Create(lUserId));
   Result.AddPair('nome', lNome);
   Result.AddPair('email', lEmail);
+end;
+
+class function TUserService.Usuario(const pUserId: Integer): TJSONObject;
+var
+  lUsuario: TUsuario;
+begin
+  lUsuario := TUserDAO.GetUserById(pUserId);
+  try
+    if not Assigned(lUsuario) then
+      raise Exception.Create('usuario_nao_encontrado');
+
+    Result := TJSONObject.Create;
+    Result.AddPair('id', TJSONNumber.Create(lUsuario.Id));
+    Result.AddPair('nome', lUsuario.Nome);
+    Result.AddPair('email', lUsuario.Email);
+    Result.AddPair('roleId', TJSONNumber.Create(lUsuario.RoleId));
+  finally
+    lUsuario.Free;
+  end;
 end;
 
 class function TUserService.Login(const pBody: TJSONObject): TJSONObject;

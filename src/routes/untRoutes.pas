@@ -8,10 +8,10 @@ implementation
 
 uses
   Horse,
-  untUserController;
+  untUserController,
+  untProdutoController;
 
 // Aqui será feito o cadastro de todas as rotas
-
 procedure RegistrarRotas;
 begin
   THorse.Get('/ping',
@@ -20,9 +20,16 @@ begin
       Res.Send('pong');
     end);
 
-  {$REGION 'Metodos do Usuário'}
+  {$REGION 'Rotas do Usuário'}
   THorse.Post('/signup', Signup);
   THorse.Post('/login', Login);
+  {$ENDREGION}
+
+  {$REGION 'Rotas do Produto'}
+  THorse.Get('/produtos', ListarProdutos); //Listar os produtos cadastrados
+  THorse.Post('/produtos', InserirProdutos); //Cadastrar um produto novo
+  THorse.Put('/produtos', AtualizarProdutos); //Atualizar produto
+
   {$ENDREGION}
 end;
 

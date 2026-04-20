@@ -187,6 +187,10 @@
         <DCCReference Include="src\utils\untJWT.pas"/>
         <DCCReference Include="src\constantes\untConstantesGlobais.pas"/>
         <DCCReference Include="src\models\untModeloUsuario.pas"/>
+        <DCCReference Include="src\models\untModeloProduto.pas"/>
+        <DCCReference Include="src\DAO\untProdutoDAO.pas"/>
+        <DCCReference Include="src\services\untProdutoService.pas"/>
+        <DCCReference Include="src\controllers\untProdutoController.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

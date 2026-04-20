@@ -15,6 +15,7 @@ type
     class function EmailExists(const AEmail: string): Boolean;
     class function InsertUser(const ANome, AEmail, ASenhaHash: string; ARoleId: Integer): Integer;
     class function GetUserByEmail(const pEmail: string): TUsuario; //Metodo para validar o usuário e ja retornar o modelo
+    class function GetUserById(const pId: Integer): TUsuario;
   end;
 
 implementation
@@ -46,6 +47,7 @@ begin
   end;
 end;
 
+//Pesquisa o cliente pelo seu email
 class function TUserDAO.GetUserByEmail(const pEmail: string): TUsuario;
 var
   lQry: TFDQuery;
@@ -67,6 +69,38 @@ begin
     if not lQry.IsEmpty then
     begin
       //Instancia o objeto
+      Result := TUsuario.Create;
+      Result.Id := lQry.FieldByName('id').AsInteger;
+      Result.Nome := lQry.FieldByName('nome').AsString;
+      Result.Email := lQry.FieldByName('email').AsString;
+      Result.Senha := lQry.FieldByName('senha').AsString;
+      Result.RoleId := lQry.FieldByName('role_id').AsInteger;
+    end;
+  finally
+    lQry.Free;
+  end;
+end;
+
+//Pesquisa o cliente pelo seu ID no banco
+class function TUserDAO.GetUserById(const pId: Integer): TUsuario;
+var
+  lQry: TFDQuery;
+begin
+  Result := nil;
+
+  lQry := TFDQuery.Create(nil);
+  try
+    lQry.Connection := TConectarBD.GetConnection;
+    lQry.SQL.Text :=
+      'SELECT id, nome, email, senha, role_id ' +
+      'FROM usuarios ' +
+      'WHERE id = :id';
+
+    lQry.ParamByName('id').AsInteger := pId;
+    lQry.Open;
+
+    if not lQry.IsEmpty then
+    begin
       Result := TUsuario.Create;
       Result.Id := lQry.FieldByName('id').AsInteger;
       Result.Nome := lQry.FieldByName('nome').AsString;
