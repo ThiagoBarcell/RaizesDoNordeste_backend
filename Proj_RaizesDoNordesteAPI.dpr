@@ -22,15 +22,19 @@ uses
   untModeloProduto in 'src\models\untModeloProduto.pas',
   untProdutoDAO in 'src\DAO\untProdutoDAO.pas',
   untProdutoService in 'src\services\untProdutoService.pas',
-  untProdutoController in 'src\controllers\untProdutoController.pas';
+  untProdutoController in 'src\controllers\untProdutoController.pas',
+  untModeloItemPedido in 'src\models\untModeloItemPedido.pas',
+  untPedidosDAO in 'src\DAO\untPedidosDAO.pas',
+  untPedidosService in 'src\services\untPedidosService.pas',
+  untPedidosController in 'src\controllers\untPedidosController.pas';
 
 begin
   try
     //Middlewares usados no projeto
     THorse.Use(Jhonson);
+
     THorse.Use(HorseJWT(TEnv.LerEnvPorChave('JWT_TOKEN'), THorseJWTConfig.New.SkipRoutes(
-      [ '/signup', '/login']
-    )));
+      [ '/signup', '/login'])));
 
     //Aqui faz a carga das DLLs para o postgre, para fazer a conexão com o BD, meotodo padrão
     //como o projeto é 64bits, ele se encontra em \Win64\Debug, volta quatro e vai pra libs
@@ -46,8 +50,7 @@ begin
       procedure
       begin
         Writeln('Servidor rodando em ' + THorse.Host + ':' +IntToStr(THorse.Port) );
-      end
-    );
+      end );
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);

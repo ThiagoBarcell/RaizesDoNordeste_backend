@@ -11,7 +11,9 @@ type
   TProdutoService = class
   public
     class function ListarProdutos(const pId: Integer; const pStatus: string): TJSONArray;
+
     class function InserirProdutos(const pBody: TJSONObject): TJSONObject;
+
     class function AtualizarProdutos(const pId: Integer; const pBody: TJSONObject): TJSONObject;
   end;
 
@@ -23,8 +25,7 @@ uses
   untProdutoDAO;
 
 //Retorna o array para a resposta na controller
-class function TProdutoService.AtualizarProdutos(const pId: Integer;
-  const pBody: TJSONObject): TJSONObject;
+class function TProdutoService.AtualizarProdutos(const pId: Integer; const pBody: TJSONObject): TJSONObject;
 var
   lNome: string;
   lDescricao: string;
@@ -36,6 +37,7 @@ begin
 
   if not TProdutoDAO.ExistePorId(pId) then
     raise Exception.Create('produto_nao_encontrado');
+
 
   lNome := Trim(pBody.GetValue<string>('nome', ''));
   lDescricao := Trim(pBody.GetValue<string>('descricao', ''));
@@ -51,15 +53,16 @@ begin
   TProdutoDAO.AtualizarProdutos(pId, lNome, lDescricao, lPreco, lAtivo);
 
   Result := TJSONObject.Create;
+
   Result.AddPair('id', TJSONNumber.Create(pId));
   Result.AddPair('nome', lNome);
   Result.AddPair('descricao', lDescricao);
   Result.AddPair('preco', TJSONNumber.Create(lPreco));
   Result.AddPair('ativo', TJSONBool.Create(lAtivo));
-end;
 
-class function TProdutoService.InserirProdutos(
-  const pBody: TJSONObject): TJSONObject;
+  end;
+
+class function TProdutoService.InserirProdutos(const pBody: TJSONObject): TJSONObject;
 var
   lNome: string;
   lDescricao: string;
@@ -81,11 +84,13 @@ begin
   lId := TProdutoDAO.InserirProdutos(lNome, lDescricao, lPreco, lAtivo);
 
   Result := TJSONObject.Create;
+
   Result.AddPair('id', TJSONNumber.Create(lId));
   Result.AddPair('nome', lNome);
   Result.AddPair('descricao', lDescricao);
   Result.AddPair('preco', TJSONNumber.Create(lPreco));
   Result.AddPair('ativo', TJSONBool.Create(lAtivo));
+
 end;
 
 class function TProdutoService.ListarProdutos(const pId: Integer; const pStatus: string): TJSONArray;
@@ -102,6 +107,7 @@ begin
     for lProduto in lProdutos do
     begin
       lItem := TJSONObject.Create;
+
       lItem.AddPair('id', TJSONNumber.Create(lProduto.Id));
       lItem.AddPair('nome', lProduto.Nome);
       lItem.AddPair('descricao', lProduto.Descricao);
@@ -110,6 +116,7 @@ begin
 
       Result.AddElement(lItem);
     end;
+
   finally
     lProdutos.Free;
   end;

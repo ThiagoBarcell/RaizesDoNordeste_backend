@@ -35,17 +35,14 @@ begin
 
     //Valida erros de digitacao
     if not (
-      SameText(lStatus, 'ativos') or
-      SameText(lStatus, 'inativos') or
-      SameText(lStatus, 'todos')
-    )
+      SameText(lStatus, 'ativos') or SameText(lStatus, 'inativos') or
+      SameText(lStatus, 'todos') )
     then
     begin
       Res.Status(400).Send<TJSONObject>(
         TJSONObject.Create
           .AddPair('error', 'STATUS_INVALIDO')
-          .AddPair('message', 'Use ativos, inativos ou todos.')
-      );
+          .AddPair('message', 'Use ativos, inativos ou todos.') );
       Exit;
     end;
 
@@ -59,8 +56,7 @@ begin
       Res.Status(500).Send<TJSONObject>(
         TJSONObject.Create
           .AddPair('error', 'ERRO_INTERNO')
-          .AddPair('message', E.Message)
-      );
+          .AddPair('message', E.Message) );
     end;
   end;
 end;
@@ -77,10 +73,8 @@ begin
     if not Assigned(lBody) then
     begin
       Res.Status(400).Send<TJSONObject>(
-        TJSONObject.Create
-          .AddPair('error', 'BODY_INVALIDO')
-          .AddPair('message', 'Body da requisição inválido.')
-      );
+        TJSONObject.Create.AddPair('error', 'BODY_INVALIDO')
+          .AddPair('message', 'Body da requisição inválido.'));
       Exit;
     end;
 
@@ -101,14 +95,12 @@ begin
         Res.Status(422).Send<TJSONObject>(
           TJSONObject.Create
             .AddPair('error', 'PRECO_INVALIDO')
-            .AddPair('message', 'O preço deve ser maior que zero.')
-        )
+            .AddPair('message', 'O preço deve ser maior que zero.') )
       else
         Res.Status(500).Send<TJSONObject>(
           TJSONObject.Create
             .AddPair('error', 'ERRO_INTERNO')
-            .AddPair('message', E.Message)
-        );
+            .AddPair('message', E.Message) );
     end;
   end;
 end;
@@ -128,8 +120,7 @@ begin
       Res.Status(400).Send<TJSONObject>(
         TJSONObject.Create
           .AddPair('error', 'BODY_INVALIDO')
-          .AddPair('message', 'Body da requisição inválido.')
-      );
+          .AddPair('message', 'Body da requisição inválido.'));
       Exit;
     end;
 
@@ -142,35 +133,30 @@ begin
         Res.Status(400).Send<TJSONObject>(
           TJSONObject.Create
             .AddPair('error', 'ID_INVALIDO')
-            .AddPair('message', 'Id do produto inválido.')
-        )
+            .AddPair('message', 'Id do produto inválido.'))
       else
       if E.Message = 'produto_nao_encontrado' then
         Res.Status(404).Send<TJSONObject>(
           TJSONObject.Create
             .AddPair('error', 'PRODUTO_NAO_ENCONTRADO')
-            .AddPair('message', 'Produto não encontrado.')
-        )
+            .AddPair('message', 'Produto não encontrado.'))
       else
       if E.Message = 'nome_obrigatorio' then
         Res.Status(422).Send<TJSONObject>(
           TJSONObject.Create
             .AddPair('error', 'NOME_OBRIGATORIO')
-            .AddPair('message', 'O campo nome é obrigatório.')
-        )
+            .AddPair('message', 'O campo nome é obrigatório.'))
       else
       if E.Message = 'preco_invalido' then
         Res.Status(422).Send<TJSONObject>(
           TJSONObject.Create
             .AddPair('error', 'PRECO_INVALIDO')
-            .AddPair('message', 'O preço deve ser maior que zero.')
-        )
+            .AddPair('message', 'O preço deve ser maior que zero.'))
       else
         Res.Status(500).Send<TJSONObject>(
           TJSONObject.Create
             .AddPair('error', 'ERRO_INTERNO')
-            .AddPair('message', E.Message)
-        );
+            .AddPair('message', E.Message));
     end;
   end;
 end;
