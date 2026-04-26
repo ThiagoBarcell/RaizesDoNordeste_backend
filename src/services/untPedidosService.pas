@@ -10,6 +10,7 @@ type
 
   public
     class function CriarPedido(const pUsuarioId: Integer; const pBody: TJSONObject): TJSONObject;
+    class function ListarPedido( const pId: Integer; const pStatus, pCanalPedido: string ): TJSONArray;
   end;
 
 implementation
@@ -121,6 +122,36 @@ begin
   Result.AddPair('status', 'AGUARDANDO_PAGAMENTO');
   Result.AddPair('canalPedido', lCanalPedido);
   Result.AddPair('total', TJSONNumber.Create(lTotal));
+end;
+
+class function TPedidoService.ListarPedido(const pId: Integer; const pStatus,
+  pCanalPedido: string): TJSONArray;
+var
+  lStatus: string;
+  lCanalPedido: string;
+begin
+  lStatus := Trim(UpperCase(pStatus));
+  lCanalPedido := Trim(UpperCase(pCanalPedido));
+
+  //Se deixar vazio não passa nada pros filtros, mas se preencher segue o padrão
+  if (lStatus <> '') and
+     (lStatus <> STATUS_PED_AGUARDANDO_PAGAMENTO) and
+     (lStatus <> STATUS_PED_PAGO) and
+     (lStatus <> STATUS_PED_EM_PREPARO) and
+     (lStatus <> STATUS_PED_PRONTO) and
+     (lStatus <> STATUS_PED_ENTREGUE) and
+     (lStatus <> STATUS_PED_CANCELADO)
+  then
+    raise Exception.Create('status_invalido');
+
+  if (lCanalPedido <> '') and
+     (lCanalPedido <> CANAL_TOTEM) and
+     (lCanalPedido <> CANAL_WEB) and
+     (lCanalPedido <> CANAL_APP)
+  then
+    raise Exception.Create('canal_pedido_invalido');
+
+  Result := TPedidoDAO.ListarPedidos(pId, lStatus, lCanalPedido);
 end;
 
 end.

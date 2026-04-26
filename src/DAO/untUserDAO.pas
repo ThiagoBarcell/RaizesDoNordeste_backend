@@ -16,6 +16,7 @@ type
     class function InsertUser(const ANome, AEmail, ASenhaHash: string; ARoleId: Integer): Integer;
     class function GetUserByEmail(const pEmail: string): TUsuario; //Metodo para validar o usuário e ja retornar o modelo
     class function GetUserById(const pId: Integer): TUsuario;
+
   end;
 
 implementation

@@ -7,6 +7,8 @@ uses
 
 procedure CriarPedido(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
+procedure ListarPedido(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+
 implementation
 
 uses
@@ -69,6 +71,44 @@ begin
         TJSONObject.Create
           .AddPair('error', 'ERRO_INTERNO')
           .AddPair('message', E.Message));
+    end;
+  end;
+end;
+
+procedure ListarPedido(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+var
+  lId: Integer;
+  lStatus: string;
+  lCanalPedido: string;
+  lResponse: TJSONArray;
+begin
+  try
+
+    lId := StrToIntDef(Req.Query['id'], 0);
+    lStatus := Req.Query['status'];
+    lCanalPedido := Req.Query['canalPedido'];
+
+    lResponse := TPedidoService.ListarPedido(lId, lStatus, lCanalPedido);
+
+    Res.Status(200).Send<TJSONArray>(lResponse);
+  except
+    on E: Exception do
+    begin
+      if E.Message = 'status_invalido' then
+        Res.Status(422).Send<TJSONObject>( TJSONObject.Create
+            .AddPair('error', 'STATUS_INVALIDO')
+            .AddPair('message', 'Status inválido.'))
+      else
+      if E.Message = 'canal_pedido_invalido' then
+        Res.Status(422).Send<TJSONObject>(
+          TJSONObject.Create
+            .AddPair('error', 'CANAL_PEDIDO_INVALIDO')
+            .AddPair('message', 'Use APP, TOTEM, BALCAO, PICKUP ou WEB.'))
+      else
+        Res.Status(500).Send<TJSONObject>(
+          TJSONObject.Create
+            .AddPair('error', 'ERRO_INTERNO')
+            .AddPair('message', E.Message));
     end;
   end;
 end;

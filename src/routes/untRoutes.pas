@@ -34,6 +34,7 @@ begin
 
   {$REGION 'Rotas dos Pedidos'}
   THorse.Post('/pedidos', CriarPedido);
+  THorse.Get('/pedidos', ListarPedido);
   {$ENDREGION}
 end;
 
