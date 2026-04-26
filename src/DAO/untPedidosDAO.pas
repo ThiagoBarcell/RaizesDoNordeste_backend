@@ -6,7 +6,10 @@ interface
 uses
   System.Generics.Collections,
   FireDAC.Comp.Client,
-  untModeloItemPedido;
+  untModeloItemPedido,
+  System.JSON,
+  FireDAC.Stan.Param,
+  Data.DB;
 
 
 type
@@ -17,17 +20,18 @@ type
     class function UnidadeExiste(const pUnidadeId: Integer): Boolean;
     class function ProdutoExiste(const pProdutoId: Integer): Boolean;
     class function ObterPrecoProduto(const pProdutoId: Integer): Double;
-
     class function ObterEstoque(const pProdutoId, pUnidadeId: Integer): Integer;
-
     class function InserirPedido( const pUsuarioId, pUnidadeId: Integer; const pCanalPedido: string;
       const pTotal: Double; const pConnection: TFDConnection): Integer;
-
     class procedure InserirPedidoItem( const pPedidoId, pProdutoId, pQuantidade: Integer;
       const pPrecoUnitario: Double; const pConnection: TFDConnection );
-
     class procedure BaixarEstoque( const pProdutoId, pUnidadeId, pQuantidade: Integer;
       const pConnection: TFDConnection );
+
+    //Listagem de pedidos
+    class function ListarPedidos( const pId: Integer;const pStatus, pCanalPedido: string ): TJSONArray;
+    class function ListarItensPedido(const pPedidoId: Integer): TJSONArray;
+
   end;
 
 implementation
@@ -177,6 +181,107 @@ begin
     lQry.ParamByName('preco_unitario').AsFloat := pPrecoUnitario;
 
     lQry.ExecSQL;
+  finally
+    lQry.Free;
+  end;
+end;
+
+class function TPedidoDAO.ListarItensPedido( const pPedidoId: Integer): TJSONArray;
+var
+  lQry: TFDQuery;
+  lItem: TJSONObject;
+begin
+  Result := TJSONArray.Create;
+
+  lQry := TFDQuery.Create(nil);
+  try
+    lQry.Connection := TConectarBD.GetConnection;
+
+    lQry.SQL.Text := ' SELECT pedido_itens.produto_id, produtos.nome AS produto, pedido_itens.quantidade, pedido_itens.preco_unitario ' +
+      ' FROM pedido_itens pedido_itens ' +
+      ' INNER JOIN produtos produtos ' +
+      '   ON produtos.id = pedido_itens.produto_id ' +
+      ' WHERE pedido_itens.pedido_id = :pedido_id ' +
+      ' ORDER BY pedido_itens.id ';
+
+    lQry.ParamByName('pedido_id').AsInteger := pPedidoId;
+    lQry.Open;
+
+    while not lQry.Eof do
+    begin
+      lItem := TJSONObject.Create;
+      lItem.AddPair('produtoId', TJSONNumber.Create(lQry.FieldByName('produto_id').AsInteger));
+      lItem.AddPair('produto', lQry.FieldByName('produto').AsString);
+      lItem.AddPair('quantidade', TJSONNumber.Create(lQry.FieldByName('quantidade').AsInteger));
+      lItem.AddPair('precoUnitario', TJSONNumber.Create(lQry.FieldByName('preco_unitario').AsFloat));
+
+      Result.AddElement(lItem);
+
+      lQry.Next;
+    end;
+  finally
+    lQry.Free;
+  end;
+end;
+
+class function TPedidoDAO.ListarPedidos(const pId: Integer; const pStatus,
+  pCanalPedido: string): TJSONArray;
+var
+  lQry: TFDQuery;
+  lPedido: TJSONObject;
+begin
+  Result := TJSONArray.Create;
+
+  lQry := TFDQuery.Create(nil);
+  try
+    lQry.Connection := TConectarBD.GetConnection;
+
+    lQry.SQL.Clear;
+    lQry.SQL.Text := ' SELECT id, usuario_id, unidade_id, canal_pedido, status, total, criado_em ' +
+      ' FROM pedidos ' +
+      ' WHERE 1=1 '; //To colocando esse where pra ficar mais facil pra so adicionar os ANDs
+
+    if pId > 0 then
+      lQry.SQL.Add('AND id = :id');
+
+    if Trim(pStatus) <> '' then
+      lQry.SQL.Add('AND status = :status');
+
+    if Trim(pCanalPedido) <> '' then
+      lQry.SQL.Add('AND canal_pedido = :canal_pedido');
+
+    //To ordenando pelo ID do pedido de forma decrescente
+    lQry.SQL.Add('ORDER BY id DESC');
+
+    if pId > 0 then
+      lQry.ParamByName('id').AsInteger := pId;
+
+    if Trim(pStatus) <> '' then
+      lQry.ParamByName('status').AsString := pStatus;
+
+    if Trim(pCanalPedido) <> '' then
+      lQry.ParamByName('canal_pedido').AsString := pCanalPedido;
+
+    lQry.Open;
+
+    while not lQry.Eof do
+    begin
+      //Monto do JSON com o Master e o detail neste ponto
+      lPedido := TJSONObject.Create;
+      lPedido.AddPair('id', TJSONNumber.Create(lQry.FieldByName('id').AsInteger));
+      lPedido.AddPair('usuarioId', TJSONNumber.Create(lQry.FieldByName('usuario_id').AsInteger));
+      lPedido.AddPair('unidadeId', TJSONNumber.Create(lQry.FieldByName('unidade_id').AsInteger));
+      lPedido.AddPair('canalPedido', lQry.FieldByName('canal_pedido').AsString);
+      lPedido.AddPair('status', lQry.FieldByName('status').AsString);
+      lPedido.AddPair('total', TJSONNumber.Create(lQry.FieldByName('total').AsFloat));
+      lPedido.AddPair('criadoEm', FormatDateTime('yyyy-mm-dd hh:nn:ss', lQry.FieldByName('criado_em').AsDateTime));
+
+      lPedido.AddPair('itens', ListarItensPedido(lQry.FieldByName('id').AsInteger));
+
+      Result.AddElement(lPedido);
+
+      lQry.Next;
+    end;
   finally
     lQry.Free;
   end;

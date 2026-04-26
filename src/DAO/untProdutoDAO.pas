@@ -5,7 +5,9 @@ interface
 uses
   System.Generics.Collections,
   System.SysUtils,
-  untModeloProduto;
+  untModeloProduto,
+  FireDAC.Stan.Param,
+  Data.DB;
 
 type
   TProdutoDAO = class
