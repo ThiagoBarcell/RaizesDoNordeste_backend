@@ -1,6 +1,6 @@
 # Raízes do Nordeste API
 
-API REST desenvolvida em **Delphi 10.3 Rio** com o framework **Horse**, utilizando **PostgreSQL** como banco de dados.
+API REST desenvolvida em **Delphi** com o framework **Horse**, utilizando **PostgreSQL** como banco de dados.
 ---
 
 ## Objetivo do projeto
