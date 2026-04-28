@@ -112,7 +112,8 @@ var
   lResponse: TJSONObject;
 begin
   try
-    lId := StrToIntDef(Req.Params['id'], 0);
+
+    lId := StrToIntDef(Req.Query['id'], 0);
     lBody := Req.Body<TJSONObject>;
 
     if not Assigned(lBody) then

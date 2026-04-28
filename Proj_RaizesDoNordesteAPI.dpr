@@ -26,13 +26,13 @@ uses
   untModeloItemPedido in 'src\models\untModeloItemPedido.pas',
   untPedidosDAO in 'src\DAO\untPedidosDAO.pas',
   untPedidosService in 'src\services\untPedidosService.pas',
-  untPedidosController in 'src\controllers\untPedidosController.pas';
+  untPedidosController in 'src\controllers\untPedidosController.pas',
+  untEstoqueDAO in 'src\DAO\untEstoqueDAO.pas';
 
 begin
   try
     //Middlewares usados no projeto
     THorse.Use(Jhonson);
-
     THorse.Use(HorseJWT(TEnv.LerEnvPorChave('JWT_TOKEN'), THorseJWTConfig.New.SkipRoutes(
       [ '/signup', '/login'])));
 
