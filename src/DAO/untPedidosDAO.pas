@@ -27,6 +27,8 @@ type
       const pPrecoUnitario: Double; const pConnection: TFDConnection );
     class procedure BaixarEstoque( const pProdutoId, pUnidadeId, pQuantidade: Integer;
       const pConnection: TFDConnection );
+    class function ObterStatusPedidos(const pPedidoId: Integer): string;
+    class procedure AtualizarStatusPedidos(const pPedidoId: Integer;const pStatus: string);
 
     //Listagem de pedidos
     class function ListarPedidos( const pId: Integer;const pStatus, pCanalPedido: string ): TJSONArray;
@@ -102,6 +104,25 @@ begin
     if not lQry.IsEmpty then
       Result := lQry.FieldByName('preco').AsFloat;
 
+  finally
+    lQry.Free;
+  end;
+end;
+
+class function TPedidoDAO.ObterStatusPedidos(const pPedidoId: Integer): string;
+var
+  lQry: TFDQuery;
+begin
+  Result := '';
+  lQry := TFDQuery.Create(nil);
+  try
+    lQry.Connection := TConectarBD.GetConnection;
+    lQry.SQL.Text := 'SELECT status FROM pedidos WHERE id = :id';
+    lQry.ParamByName('id').AsInteger := pPedidoId;
+    lQry.Open;
+
+    if not lQry.IsEmpty then
+      Result := lQry.FieldByName('status').AsString;
   finally
     lQry.Free;
   end;
@@ -282,6 +303,27 @@ begin
 
       lQry.Next;
     end;
+  finally
+    lQry.Free;
+  end;
+end;
+
+class procedure TPedidoDAO.AtualizarStatusPedidos(const pPedidoId: Integer;
+  const pStatus: string);
+var
+  lQry: TFDQuery;
+begin
+  lQry := TFDQuery.Create(nil);
+  try
+
+    lQry.Connection := TConectarBD.GetConnection;
+    lQry.SQL.Clear;
+    lQry.SQL.Text := 'UPDATE pedidos SET status = :status WHERE id = :id';
+
+    lQry.ParamByName('id').AsInteger := pPedidoId;
+    lQry.ParamByName('status').AsString := pStatus;
+
+    lQry.ExecSQL;
   finally
     lQry.Free;
   end;

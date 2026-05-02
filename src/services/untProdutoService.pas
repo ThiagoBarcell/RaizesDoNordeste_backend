@@ -4,7 +4,7 @@ interface
 
 uses
   System.JSON,
-  System.SysUtils;
+  System.SysUtils, untLogService;
 
 type
 
@@ -12,7 +12,7 @@ type
   public
     class function ListarProdutos(const pId: Integer; const pStatus: string): TJSONArray;
 
-    class function InserirProdutos(const pBody: TJSONObject): TJSONObject;
+    class function InserirProdutos(const pUsuarioId : Integer; const pBody: TJSONObject): TJSONObject;
 
     class function AtualizarProdutos(const pId: Integer; const pBody: TJSONObject): TJSONObject;
   end;
@@ -62,7 +62,7 @@ begin
 
   end;
 
-class function TProdutoService.InserirProdutos(const pBody: TJSONObject): TJSONObject;
+class function TProdutoService.InserirProdutos(const pUsuarioId : Integer; const pBody: TJSONObject): TJSONObject;
 var
   lNome: string;
   lDescricao: string;
@@ -82,6 +82,9 @@ begin
     raise Exception.Create('preco_invalido');
 
   lId := TProdutoDAO.InserirProdutos(lNome, lDescricao, lPreco, lAtivo);
+
+  TLogService.GerarLog( pUsuarioId, 'CRIAR_PRODUTO','PRODUTO',
+    lId,lNome );
 
   Result := TJSONObject.Create;
 

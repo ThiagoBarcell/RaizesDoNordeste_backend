@@ -1,9 +1,9 @@
-unit untPedidosService;
+Ôªøunit untPedidosService;
 
 interface
 
 uses
-  System.JSON;
+  System.JSON, System.DateUtils;
 
 type
   TPedidoService = class
@@ -11,6 +11,7 @@ type
   public
     class function CriarPedido(const pUsuarioId: Integer; const pBody: TJSONObject): TJSONObject;
     class function ListarPedido( const pId: Integer; const pStatus, pCanalPedido: string ): TJSONArray;
+    class function AtualizarStatusPedido(const pUsuarioId: Integer;const pPedidoId: Integer;const pBody: TJSONObject): TJSONObject;
   end;
 
 implementation
@@ -21,11 +22,55 @@ uses
   FireDAC.Comp.Client,
   untPedidosDAO,
   untConnection,
-  untConstantesGlobais;
+  untConstantesGlobais,
+  untEstoqueDAO,
+  untLogService;
+
+
+
+class function TPedidoService.AtualizarStatusPedido(const pUsuarioId,pPedidoId: Integer; const pBody: TJSONObject): TJSONObject;
+var
+  lNovoStatus: string;
+  lStatusAtual: string;
+begin
+  if pUsuarioId <= 0 then
+    raise Exception.Create('usuario_invalido');
+
+  if pPedidoId <= 0 then
+    raise Exception.Create('pedido_invalido');
+
+  lNovoStatus := Trim(UpperCase(pBody.GetValue<string>('status', '')));
+
+  //Se existe o status digitado, seguindo os padr√µes que eu criei
+  if (lNovoStatus <> STATUS_PED_AGUARDANDO_PAGAMENTO) and
+     (lNovoStatus <> STATUS_PED_PAGO) and
+     (lNovoStatus <> STATUS_PED_EM_PREPARO) and
+     (lNovoStatus <> STATUS_PED_PRONTO) and
+     (lNovoStatus <> STATUS_PED_ENTREGUE ) and
+     (lNovoStatus <> STATUS_PED_CANCELADO)
+  then
+    raise Exception.Create('status_invalido');
+
+  lStatusAtual := TPedidoDAO.ObterStatusPedidos(pPedidoId);
+
+  if lStatusAtual = '' then
+    raise Exception.Create('pedido_nao_encontrado');
+
+  TPedidoDAO.AtualizarStatusPedidos(pPedidoId, lNovoStatus);
+
+  TLogService.GerarLog(pUsuarioId,'ALTERAR_STATUS_PEDIDO',ORI_PED_PEDIDO,
+  pPedidoId, 'De : ' + lStatusAtual + ', Para : ' + lNovoStatus);
+
+  Result := TJSONObject.Create;
+
+  Result.AddPair('pedidoId', TJSONNumber.Create(pPedidoId));
+  Result.AddPair('statusAnterior', lStatusAtual);
+  Result.AddPair('statusAtual', lNovoStatus);
+end;
 
 class function TPedidoService.CriarPedido(const pUsuarioId: Integer; const pBody: TJSONObject): TJSONObject;
 var
-  lUnidadeId: Integer;
+  lUnidadeId, lQuantidadeAnterior, lQuantidadeAtual : Integer;
   lCanalPedido: string;
   lItens: TJSONArray;
   lItem: TJSONValue;
@@ -51,7 +96,7 @@ begin
   if not (TPedidoDAO.UnidadeExiste(lUnidadeId)) then
     raise Exception.Create('unidade_nao_encontrada');
 
-  //Verifica se est· em algum canal de pedido cadastrado
+  //Verifica se est√° em algum canal de pedido cadastrado
   if not (lCanalPedido = CANAL_APP) and
     not (lCanalPedido = CANAL_TOTEM) and
     not (lCanalPedido = CANAL_WEB)
@@ -63,7 +108,7 @@ begin
 
   lTotal := 0;
 
-  //Esse for roda todo o array de itens que foi pego no body da requisiÁ„o
+  //Esse for roda todo o array de itens que foi pego no body da requisi√ß√£o
   // e o lItem, seria o valor atual no for
   for lItem in lItens do
   begin
@@ -92,7 +137,7 @@ begin
 
   lConnection := TConectarBD.GetConnection;
 
-  //Iniciei a transaÁ„o para o cached update, caso de algo errado o rollback È geral
+  //Iniciei a transa√ß√£o para o cached update, caso de algo errado o rollback √© geral
   lConnection.StartTransaction;
   try
     lPedidoId := TPedidoDAO.InserirPedido(pUsuarioId, lUnidadeId, lCanalPedido, lTotal, lConnection);
@@ -107,11 +152,23 @@ begin
       lPrecoUnitario := TPedidoDAO.ObterPrecoProduto(lProdutoId);
 
       TPedidoDAO.InserirPedidoItem(lPedidoId, lProdutoId, lQuantidade, lPrecoUnitario, lConnection);
-      //Aqui eu ajusto a diferenÁa de estoque
+      //Aqui eu ajusto a diferen√ßa de estoque
       TPedidoDAO.BaixarEstoque(lProdutoId, lUnidadeId, lQuantidade, lConnection);
+
+      //Aqui to fazendo o calculo do estoque com o anterior para gravar a movimenta√ß√£o
+      lQuantidadeAnterior := TEstoqueDAO.ObterSaldo(lProdutoId, lUnidadeId);
+      lQuantidadeAtual := lQuantidadeAnterior - lQuantidade;
+
+      TEstoqueDAO.RegistrarMovimentacao( lProdutoId, lUnidadeId, pUsuarioId,
+        MOV_TIPO_BAIXA_PEDIDO, ORI_PED_PEDIDO, lQuantidade, lQuantidadeAnterior, lQuantidadeAtual,
+        'Baixa feita pelo pedido : ' + IntToStr(lPedidoId));
     end;
 
     lConnection.Commit;
+
+    TLogService.GerarLog(pUsuarioId, 'CRIAR_PEDIDO',
+     ORI_PED_PEDIDO,lPedidoId,'Pedido criado com total de : ' + FloatToStr(lTotal));
+
   except
     lConnection.Rollback;
     raise;
@@ -133,7 +190,7 @@ begin
   lStatus := Trim(UpperCase(pStatus));
   lCanalPedido := Trim(UpperCase(pCanalPedido));
 
-  //Se deixar vazio n„o passa nada pros filtros, mas se preencher segue o padr„o
+  //Se deixar vazio n√£o passa nada pros filtros, mas se preencher segue o padr√£o
   if (lStatus <> '') and
      (lStatus <> STATUS_PED_AGUARDANDO_PAGAMENTO) and
      (lStatus <> STATUS_PED_PAGO) and

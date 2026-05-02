@@ -19,8 +19,17 @@ const
   STATUS_PED_ENTREGUE = 'ENTREGUE';
   STATUS_PED_CANCELADO = 'CANCELADO';
 
+  //Status de pagamentos
+  STATUS_PAGAMENTO_APROVADO = 'APROVADO';
+  STATUS_PAGAMENTO_RECUSADO = 'RECUSADO';
+
+  //Ambientes
+  AMB_MOCK = 'MOCK';
+  AMB_DEV = 'DESENVOLVIMENTO';
+  AMB_PROD = 'PRODUCAO';
+
   //Tipos de movimentações do estoque, deixei aqui pro padrão q fiz no BD
-  MOV_TIPO_ENTRADA = '';
+  MOV_TIPO_ENTRADA = 'ENTRADA';
   MOV_TIPO_SAIDA = 'SAIDA';
   MOV_TIPO_AJUSTE = 'AJUSTE';
   MOV_TIPO_BAIXA_PEDIDO = 'BAIXA_PEDIDO';
@@ -30,6 +39,12 @@ const
   ORI_PED_PEDIDO = 'PEDIDO';
   ORI_PED_SISTEMA = 'SISTEMA';
 
+  //Tags para usar no swagger
+  TAG_SWAGGER_AUTH = 'Auth';
+  TAG_SWAGGER_PRODUTOS = 'Produtos';
+  TAG_SWAGGER_PEDIDOS = 'Pedidos';
+  TAG_SWAGGER_ESTOQUE = 'Estoque';
+  TAG_SWAGGER_PAGAMENTOS = 'Pagamentos';
 
 implementation
 

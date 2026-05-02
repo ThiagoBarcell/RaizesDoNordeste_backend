@@ -6,8 +6,8 @@ uses
   Horse;
 
 procedure CriarPedido(Req: THorseRequest; Res: THorseResponse; Next: TProc);
-
 procedure ListarPedido(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+procedure AtualizarStatusPedido(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
 implementation
 
@@ -16,6 +16,54 @@ uses
   System.SysUtils,
   JOSE.Core.JWT,
   untPedidosService;
+
+procedure AtualizarStatusPedido(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+var
+  lSession: TJSONObject;
+  lUsuarioId: Integer;
+  lPedidoId: Integer;
+  lBody: TJSONObject;
+  lResponse: TJSONObject;
+begin
+  try
+    lSession := Req.Session<TJSONObject>;
+
+    if not Assigned(lSession) then
+    begin
+      Res.Status(401).Send('Token inválido');
+      Exit;
+    end;
+
+    lUsuarioId := StrToIntDef(lSession.GetValue<string>('sub', ''), 0);
+    lPedidoId := StrToIntDef(Req.Params['id'], 0);
+    lBody := Req.Body<TJSONObject>;
+
+    if not Assigned(lBody) then
+    begin
+      Res.Status(400).Send('Body inválido');
+      Exit;
+    end;
+
+    lResponse := TPedidoService.AtualizarStatusPedido(lUsuarioId, lPedidoId, lBody);
+
+    Res.Status(200).Send<TJSONObject>(lResponse);
+
+  except
+    on E: Exception do
+    begin
+      if E.Message = 'pedido_nao_encontrado' then
+        Res.Status(404).Send('Pedido não encontrado')
+      else
+      if E.Message = 'status_invalido' then
+        Res.Status(422).Send('Status inválido')
+      else
+      if E.Message = 'transicao_invalida' then
+        Res.Status(409).Send('Transição de status inválida')
+      else
+        Res.Status(500).Send(E.Message);
+    end;
+  end;
+end;
 
 procedure CriarPedido(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var

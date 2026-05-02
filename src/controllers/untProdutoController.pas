@@ -64,11 +64,23 @@ end;
 procedure InserirProdutos(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   lBody: TJSONObject;
+  lSession: TJSONObject;
   lResponse: TJSONObject;
+  lUsuarioId : Integer;
 begin
   try
     //Ja recebe o corpo da requisição
     lBody := Req.Body<TJSONObject>;
+
+    lSession := Req.Session<TJSONObject>;
+
+    if not Assigned(lSession) then
+    begin
+      Res.Status(401).Send('Token inválido');
+      Exit;
+    end;
+
+    lUsuarioId := StrToIntDef(lSession.GetValue<string>('sub', ''), 0);
 
     if not Assigned(lBody) then
     begin
@@ -78,7 +90,7 @@ begin
       Exit;
     end;
 
-    lResponse := TProdutoService.InserirProdutos(lBody);
+    lResponse := TProdutoService.InserirProdutos( lUsuarioId, lBody);
     Res.Status(201).Send<TJSONObject>(lResponse);
   except
     //Trata todas as exceçoes

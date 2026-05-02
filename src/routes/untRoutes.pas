@@ -10,7 +10,9 @@ uses
   Horse,
   untUserController,
   untProdutoController,
-  untPedidosController;
+  untPedidosController,
+  untEstoqueController,
+  untPagamentoController;
 
 // Aqui será feito o cadastro de todas as rotas
 procedure RegistrarRotas;
@@ -35,6 +37,16 @@ begin
   {$REGION 'Rotas dos Pedidos'}
   THorse.Post('/pedidos', CriarPedido);
   THorse.Get('/pedidos', ListarPedido);
+  THorse.Patch('/pedidos/:id/status', AtualizarStatusPedido);
+  {$ENDREGION}
+
+  {$REGION 'Rotas dos Estoques'}
+  THorse.Get('/estoque', ListarEstoque);
+  THorse.Post('/estoque/movimentar', MovimentarEstoque);
+  {$ENDREGION}
+
+  {$REGION 'Rotas de pagamento Mockado'}
+  THorse.Post('/pagamentos',SolicitarPagamento);
   {$ENDREGION}
 end;
 

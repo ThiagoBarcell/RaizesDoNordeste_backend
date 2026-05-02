@@ -4,7 +4,9 @@ interface
 
 uses
   System.JSON,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client,
+  FireDAC.Stan.Param,
+  Data.DB;
 
 type
 
@@ -12,7 +14,7 @@ type
 
   public
     class function Listar(const pProdutoId, pUnidadeId: Integer): TJSONArray;
-    class function ObterSaldo( const pProdutoId, pUnidadeId: Integer;const pConnection: TFDConnection = nil): Integer;
+    class function ObterSaldo( const pProdutoId, pUnidadeId: Integer): Integer;
 
     class procedure AtualizarSaldo(const pProdutoId, pUnidadeId, pQuantidadeAtual: Integer);
     class procedure RegistrarMovimentacao(const pProdutoId, pUnidadeId, pUsuarioId: Integer;const pTipo, pOrigem: string;
@@ -79,8 +81,7 @@ begin
   end;
 end;
 
-class function TEstoqueDAO.ObterSaldo(const pProdutoId, pUnidadeId: Integer;
-  const pConnection: TFDConnection): Integer;
+class function TEstoqueDAO.ObterSaldo(const pProdutoId, pUnidadeId: Integer): Integer;
 var
   lQry: TFDQuery;
 begin
@@ -90,9 +91,8 @@ begin
   try
     lQry.Connection := TConectarBD.GetConnection;
 
-
-    lQry.SQL.Text :=
-      ' SELECT quantidade ' +
+    lQry.SQL.Clear;
+    lQry.SQL.Text := ' SELECT quantidade ' +
       ' FROM estoque ' +
       ' WHERE produto_id = :produto_id ' +
       ' AND unidade_id = :unidade_id';
@@ -142,8 +142,7 @@ begin
   try
     lQry.Connection := TConectarBD.GetConnection;
 
-    lQry.SQL.Text :=
-      'INSERT INTO estoque_movimentacoes ' +
+    lQry.SQL.Text := 'INSERT INTO estoque_movimentacoes ' +
       '(produto_id, unidade_id, usuario_id, tipo, origem, quantidade, quantidade_anterior, quantidade_atual, observacao) ' +
       'VALUES ' +
       '(:produto_id, :unidade_id, :usuario_id, :tipo, :origem, :quantidade, :quantidade_anterior, :quantidade_atual, :observacao)';

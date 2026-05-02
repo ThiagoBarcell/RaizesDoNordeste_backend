@@ -29,7 +29,7 @@ begin
     lJWT.Claims.Subject := IntToStr(pUserId);
     lJWT.Claims.SetClaimOfType<string>('email', pEmail);
 
-    Result := TJOSE.SHA256CompactToken(TEnv.LerEnvPorChave('JWT_TOKEN'), lJWT);
+    Result := TJOSE.SHA256CompactToken(TEnv.LerEnvPorChave('JWT_SECRET'), lJWT);
   finally
     lJWT.Free;
   end;
