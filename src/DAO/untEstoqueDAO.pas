@@ -56,10 +56,10 @@ begin
     lQry.SQL.Add(' ORDER BY u.nome, p.nome ');
 
     if (pProdutoId > 0) then
-      lQry.ParamByName(' produto_id ').AsInteger := pProdutoId;
+      lQry.ParamByName('produto_id').AsInteger := pProdutoId;
 
     if (pUnidadeId > 0) then
-      lQry.ParamByName(' unidade_id ').AsInteger := pUnidadeId;
+      lQry.ParamByName('unidade_id').AsInteger := pUnidadeId;
     lQry.Open;
 
     while not lQry.Eof do

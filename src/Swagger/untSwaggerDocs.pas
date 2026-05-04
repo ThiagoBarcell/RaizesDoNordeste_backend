@@ -12,7 +12,7 @@ uses
   untConstantesGlobais;
 
 type
-  // ====== MODELOS ======
+  // Esses são os modelos de retorno e exemplos
 
   TModelErro = class
   private
@@ -32,6 +32,26 @@ type
     property nome: string read Fnome write Fnome;
     property email: string read Femail write Femail;
     property senha: string read Fsenha write Fsenha;
+  end;
+
+  TModelSignupResponse = class
+  private
+    Fid: Integer;
+    Fnome: string;
+    Femail: string;
+  public
+    property id: Integer read Fid write Fid;
+    property nome: string read Fnome write Fnome;
+    property email: string read Femail write Femail;
+  end;
+
+  TModelSignupResponseERROR422 = class
+  private
+    Ferror: string;
+    Fmessage: string;
+  public
+  property error: string read Ferror write Ferror;
+  property message: string read Fmessage write Fmessage;
   end;
 
   TModelLoginRequest = class
@@ -88,6 +108,21 @@ type
     property status: string read Fstatus write Fstatus;
   end;
 
+  TModelMovimentacaoEstoqueRequest = class
+  private
+    FprodutoId: Integer;
+    FunidadeId: Integer;
+    FtipoMov: string;
+    Fquantidade: Integer;
+    Fobservacao: string;
+  public
+    property produtoId: Integer read FprodutoId write FprodutoId;
+    property unidadeId: Integer read FunidadeId write FunidadeId;
+    property tipo: string read FtipoMov write FtipoMov;
+    property quantidade: Integer read Fquantidade write Fquantidade;
+    property observacao: string read Fobservacao write Fobservacao;
+  end;
+
 procedure DocumentacaoSwagger;
 begin
   THorse.Use(HorseSwagger('/swagger', '/swagger/json'));
@@ -113,8 +148,7 @@ begin
       'Bearer <seu_token>')
   .&End;
 
-  // ================= AUTH =================
-
+  {$REGION 'AUTH'}
   Swagger.Path('/signup')
     .Tag(TAG_SWAGGER_AUTH)
     .POST('Cadastro', 'Cadastrar usuário')
@@ -122,11 +156,14 @@ begin
         .Required(True)
         .Schema(TModelSignupRequest)
       .&End
-      .AddResponse(200, 'OK')
-        .Schema(TModelLoginResponse)
+      .AddResponse(201, 'OK')
+        .Schema(TModelSignupResponse)
       .&End
       .AddResponse(401, 'Não autorizado')
         .Schema(TModelErro)
+      .&End
+      .AddResponse(422, 'Unknown Response Code')
+        .Schema(TModelSignupResponseERROR422)
       .&End
     .&End
   .&End;
@@ -144,11 +181,14 @@ begin
       .AddResponse(401, 'Não autorizado')
         .Schema(TModelErro)
       .&End
+      .AddResponse(422, 'Unknown Response Code')
+        .Schema(TModelSignupResponseERROR422)
+      .&End
     .&End
   .&End;
+  {$ENDREGION}
 
-  // ================= PRODUTOS =================
-
+  {$REGION 'PRODUTOS'}
   Swagger.Path('/produtos')
     .Tag(TAG_SWAGGER_PRODUTOS)
     .GET('Listar', 'Lista produtos')
@@ -170,9 +210,9 @@ begin
       .AddResponse(200, 'OK')
     .&End
   .&End;
+  {$ENDREGION}
 
-  // ================= PEDIDOS =================
-
+  {$REGION 'PEDIDOS'}
   Swagger.Path('/pedidos')
     .Tag(TAG_SWAGGER_PEDIDOS)
     .GET('Listar', 'Lista pedidos com filtros')
@@ -205,12 +245,16 @@ begin
       .&End
     .&End
   .&End;
+  {$ENDREGION}
 
-  // ================= ESTOQUE =================
-
+  {$REGION 'ESTOQUE'}
   Swagger.Path('/estoque')
     .Tag(TAG_SWAGGER_ESTOQUE)
     .GET('Listar', 'Consulta estoque')
+      .AddParamQuery('produtoId', 'ID do produto')
+      .&End
+      .AddParamQuery('unidadeId', 'ID da unidade ')
+      .&End
       .AddResponse(200, 'OK')
     .&End
   .&End;
@@ -218,16 +262,24 @@ begin
   Swagger.Path('/estoque/movimentar')
     .Tag(TAG_SWAGGER_ESTOQUE)
     .POST('Movimentar', 'Movimenta estoque')
+      .AddParamBody('Movimentação', 'Tipo da movimentação aceitos no campo "tipo" : ' +
+      MOV_TIPO_ENTRADA + ', ' + MOV_TIPO_SAIDA + ', ' + MOV_TIPO_AJUSTE + ', ' + MOV_TIPO_BAIXA_PEDIDO)
+        .Required(True)
+        .Schema(TModelMovimentacaoEstoqueRequest)
+      .&End
       .AddResponse(201, 'Criado')
+      .&End
+      .AddResponse(404, 'Não encontrado')
+        .Schema(TModelErro)
       .&End
       .AddResponse(409, 'Erro de estoque')
         .Schema(TModelErro)
       .&End
     .&End
   .&End;
+  {$ENDREGION}
 
-  // ================= PAGAMENTO =================
-
+  {$REGION 'PAGAMENTO'}
   Swagger.Path('/pagamentos')
     .Tag(TAG_SWAGGER_PAGAMENTOS)
     .POST('Pagamento mock', 'Simula pagamento')
@@ -241,7 +293,7 @@ begin
       .&End
     .&End
   .&End;
-
+  {$ENDREGION}
 end;
 
 end.

@@ -68,7 +68,7 @@ begin
     THorse.Listen(StrToInt(TEnv.LerEnvPorChave('API_PORT')),
       procedure
       begin
-        Writeln('Servidor rodando na porta : ' +IntToStr(THorse.Port) );
+        Writeln('Servidor rodando na porta : ' + IntToStr(THorse.Port) );
       end );
   except
     on E: Exception do
