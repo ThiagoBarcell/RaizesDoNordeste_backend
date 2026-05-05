@@ -51,16 +51,28 @@ begin
   except
     on E: Exception do
     begin
-      if E.Message = 'pedido_nao_encontrado' then
-        Res.Status(404).Send('Pedido não encontrado')
+      if E.Message = 'pedido_nao_encontrado'then
+        Res.Status(404).Send<TJSONObject>(
+          TJSONObject.Create
+            .AddPair('error', 'PEDIDO_NAO_ENCONTRADO')
+            .AddPair('message', 'Pedido não encontrado'))
       else
       if E.Message = 'status_invalido' then
-        Res.Status(422).Send('Status inválido')
+        Res.Status(422).Send<TJSONObject>(
+          TJSONObject.Create
+            .AddPair('error', 'STATUS_INVALIDO')
+            .AddPair('message', 'Status inválido'))
       else
       if E.Message = 'transicao_invalida' then
-        Res.Status(409).Send('Transição de status inválida')
+        Res.Status(409).Send<TJSONObject>(
+          TJSONObject.Create
+            .AddPair('error', 'TRANSICAO_INVALIDA')
+            .AddPair('message', 'Transição de status inválida'))
       else
-        Res.Status(500).Send(E.Message);
+        Res.Status(500).Send<TJSONObject>(
+          TJSONObject.Create
+            .AddPair('error', 'ERRO_INTERNO')
+            .AddPair('message', E.Message));
     end;
   end;
 end;

@@ -2,14 +2,11 @@ unit untSwaggerDocs;
 
 interface
 
-procedure DocumentacaoSwagger;
-
-implementation
-
 uses
   Horse,
   Horse.GBSwagger,
-  untConstantesGlobais;
+  untConstantesGlobais,
+  System.Generics.Collections;
 
 type
   // Esses são os modelos de retorno e exemplos
@@ -72,6 +69,7 @@ type
     property tokenType: string read FtokenType write FtokenType;
   end;
 
+type
   TModelPedidoItem = class
   private
     FprodutoId: Integer;
@@ -85,11 +83,11 @@ type
   private
     FunidadeId: Integer;
     FcanalPedido: string;
-    Fitens: TArray<TModelPedidoItem>;
+    Fitens: TObjectList<TModelPedidoItem>;
   public
     property unidadeId: Integer read FunidadeId write FunidadeId;
     property canalPedido: string read FcanalPedido write FcanalPedido;
-    property itens: TArray<TModelPedidoItem> read Fitens write Fitens;
+    property itens: TObjectList<TModelPedidoItem> read Fitens write Fitens;
   end;
 
   TModelPagamentoRequest = class
@@ -108,6 +106,19 @@ type
     property status: string read Fstatus write Fstatus;
   end;
 
+  TModelProduto = class
+  private
+    Fnome: string;
+    Fdescricao : string;
+    Fpreco : string;
+    Fativo : Boolean;
+  public
+    property nome: string read Fnome write Fnome;
+    property descricao: string read Fdescricao write Fdescricao;
+    property preco: string read Fpreco write Fpreco;
+    property ativo: Boolean read Fativo write Fativo;
+  end;
+
   TModelMovimentacaoEstoqueRequest = class
   private
     FprodutoId: Integer;
@@ -124,6 +135,10 @@ type
   end;
 
 procedure DocumentacaoSwagger;
+
+implementation
+
+procedure DocumentacaoSwagger;
 begin
   THorse.Use(HorseSwagger('/swagger', '/swagger/json'));
 
@@ -132,7 +147,7 @@ begin
       .Title('Raízes do Nordeste API')
       .Description('API REST para gestão de pedidos, produtos, estoque e pagamentos')
       .Contact
-        .Name('Thiago Barcellos')
+        .Name('Thiago Afonso Barcelos RU:4673653')
         .Email('t.afonso.barcelos@outlook.com')
       .&End
     .&End;
@@ -144,8 +159,8 @@ begin
   Swagger
     .AddBearerSecurity
     .Description( 'Autenticação via JWT Bearer. ' +
-      'Obtenha o token nas rotas /login ou /signup e informe no formato: ' +
-      'Bearer <seu_token>')
+      'Obtenha o token na rota /login  e informe no formato: ' + sLineBreak +
+      'bearer <seu_token> ')
   .&End;
 
   {$REGION 'AUTH'}
@@ -192,20 +207,35 @@ begin
   Swagger.Path('/produtos')
     .Tag(TAG_SWAGGER_PRODUTOS)
     .GET('Listar', 'Lista produtos')
+      .AddParamQuery('id', 'ID do produto')
+    .&End
+      .AddParamQuery('status', 'Status do produto : ATIVOS, INATIVOS')
+    .&End
       .AddResponse(200, 'OK')
+    .&End
+    .AddResponse(400, 'Erro')
+      .Schema(TModelErro)
     .&End;
 
   Swagger.Path('/produtos')
     .Tag(TAG_SWAGGER_PRODUTOS)
     .POST('Criar', 'Criar produto')
+    .AddParamBody('Produto', 'Dados do produto')
+    .Required(True)
+    .Schema(TModelProduto)
+    .&End
       .AddResponse(201, 'Criado')
     .&End
   .&End;
 
-  Swagger.Path('/produtos/{id}')
+  Swagger.Path('/produtos')
     .Tag(TAG_SWAGGER_PRODUTOS)
     .PUT('Atualizar', 'Atualizar produto')
-      .AddParamPath('id', 'ID do produto')
+      .AddParamQuery('id', 'ID do produto')
+    .&End
+    .AddParamBody('Produto', 'Dados do Produto')
+    .Required(True)
+    .Schema(TModelProduto)
     .&End
       .AddResponse(200, 'OK')
     .&End
@@ -216,17 +246,28 @@ begin
   Swagger.Path('/pedidos')
     .Tag(TAG_SWAGGER_PEDIDOS)
     .GET('Listar', 'Lista pedidos com filtros')
+      .AddParamQuery('id', 'ID do pedido')
+    .&End
+      .AddParamQuery('canalPedido', 'Canais disponíveis onde fazer pedidos : ' + CANAL_TOTEM + ', ' + CANAL_WEB + ', ' + CANAL_APP )
+    .&End
+      .AddParamQuery('status', 'Status dos pedidos : ' + STATUS_PED_AGUARDANDO_PAGAMENTO + ', ' +
+        STATUS_PED_PAGO + ', ' + STATUS_PED_EM_PREPARO + ', ' + STATUS_PED_PRONTO + ', ' + STATUS_PED_ENTREGUE + ', ' +
+          STATUS_PED_CANCELADO + ', ' + STATUS_PAGAMENTO_APROVADO + ', ' + STATUS_PAGAMENTO_RECUSADO )
+    .&End
       .AddResponse(200, 'OK')
     .&End;
 
     Swagger.Path('/pedidos')
     .Tag(TAG_SWAGGER_PEDIDOS)
     .POST('Criar', 'Criar pedido')
-      .AddParamBody('Pedido', 'Dados do pedido')
-        .Required(True)
+      .AddParamBody('Pedido', 'Dados do pedido, Canais de pedido : ' + CANAL_TOTEM + ', ' + CANAL_WEB + ', ' + CANAL_APP )
+        .Required(True)   //Esse schema eu tive que criar na mão pois o array não estava vindo corretamente
         .Schema(TModelPedidoRequest)
       .&End
       .AddResponse(201, 'Criado')
+    .&End
+    .AddResponse(500, 'Erro interno')
+        .Schema(TModelErro)
     .&End
   .&End;
 
@@ -235,12 +276,23 @@ begin
     .PATCH('Atualizar status', 'Atualiza status do pedido')
       .AddParamPath('id', 'ID do pedido')
       .&End
-      .AddParamBody('Status', 'Novo status')
+      .AddParamBody('Status', 'Novo status, Lista de status dos pedidos : ' + STATUS_PED_AGUARDANDO_PAGAMENTO + ', ' +
+        STATUS_PED_PAGO + ', ' + STATUS_PED_EM_PREPARO + ', ' + STATUS_PED_PRONTO + ', ' + STATUS_PED_ENTREGUE + ', ' +
+          STATUS_PED_CANCELADO + ', ' + STATUS_PAGAMENTO_APROVADO + ', ' + STATUS_PAGAMENTO_RECUSADO)
         .Schema(TModelAtualizarStatus)
       .&End
       .AddResponse(200, 'OK')
       .&End
+      .AddResponse(404, 'Transição inválida')
+        .Schema(TModelErro)
+      .&End
+      .AddResponse(422, 'Transição inválida')
+        .Schema(TModelErro)
+      .&End
       .AddResponse(409, 'Transição inválida')
+        .Schema(TModelErro)
+      .&End
+      .AddResponse(500, 'Transição inválida')
         .Schema(TModelErro)
       .&End
     .&End
@@ -263,7 +315,7 @@ begin
     .Tag(TAG_SWAGGER_ESTOQUE)
     .POST('Movimentar', 'Movimenta estoque')
       .AddParamBody('Movimentação', 'Tipo da movimentação aceitos no campo "tipo" : ' +
-      MOV_TIPO_ENTRADA + ', ' + MOV_TIPO_SAIDA + ', ' + MOV_TIPO_AJUSTE + ', ' + MOV_TIPO_BAIXA_PEDIDO)
+      MOV_TIPO_ENTRADA + ', ' + MOV_TIPO_SAIDA + ', ' + MOV_TIPO_AJUSTE)
         .Required(True)
         .Schema(TModelMovimentacaoEstoqueRequest)
       .&End
@@ -273,6 +325,9 @@ begin
         .Schema(TModelErro)
       .&End
       .AddResponse(409, 'Erro de estoque')
+        .Schema(TModelErro)
+      .&End
+      .AddResponse(422, 'Não encontrado')
         .Schema(TModelErro)
       .&End
     .&End
@@ -289,6 +344,9 @@ begin
       .AddResponse(201, 'OK')
       .&End
       .AddResponse(409, 'Erro')
+        .Schema(TModelErro)
+      .&End
+      .AddResponse(404, 'Erro')
         .Schema(TModelErro)
       .&End
     .&End

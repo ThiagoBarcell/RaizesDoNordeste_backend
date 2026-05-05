@@ -21,7 +21,7 @@
 		"github.com/gabrielbaltazar/gbswagger": {
 			"name": "gbswagger",
 			"version": "3.1.0",
-			"hash": "1d45cb3210674c8eca2d9fe24c675c57",
+			"hash": "2e9fd4b956c2979d16d5c3d7b6ef8a1d",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
@@ -62,6 +62,14 @@
 			"name": "horse-logger-provider-console",
 			"version": "1.0.9",
 			"hash": "d8a9d0ed0d0cd97ea0b6f3bd65f62bc6",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"github.com/hashload/horse-logger-provider-logfile": {
+			"name": "horse-logger-provider-logfile",
+			"version": "1.0.13",
+			"hash": "72c01853ef3dbfb44150921a856e8d39",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
