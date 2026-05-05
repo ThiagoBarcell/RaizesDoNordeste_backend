@@ -60,7 +60,7 @@ git clone https://github.com/ThiagoBarcell/RaizesDoNordeste_backend.git
 
 ## 📦 Instalar dependências (BOSS)
 
-Este projeto utiliza o **BOSS (Bora Open Source System)** como gerenciador de pacotes para Delphi.
+Este projeto utiliza o **BOSS** como gerenciador de pacotes para Delphi.
 
 ### ▶️ Como instalar as dependências
 
@@ -234,7 +234,6 @@ http://localhost:9000/swagger
 
 * `POST /signup`
 * `POST /login`
-* `GET /me`
 
 ---
 
@@ -318,8 +317,6 @@ Para testar os endpoints da API utilizando o token JWT gerado no login.
 
 ## 🧠 Observações importantes
 
-* Projeto desenvolvido com foco acadêmico
-* Estrutura baseada em boas práticas de mercado
 * Separação em camadas (Controller / Service / DAO)
 * Controle de transição de status de pedidos
 * Validações de negócio implementadas
