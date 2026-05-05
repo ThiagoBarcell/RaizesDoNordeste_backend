@@ -52,18 +52,13 @@ libs/
 
 ### 1. Clonar o repositório
 
-```
-git clone https://github.com/ThiagoBarcell/RaizesDoNordeste_backend
+```bash
+git clone https://github.com/ThiagoBarcell/RaizesDoNordeste_backend.git
 ```
 
 ---
 
-### 2. Instalar dependências (BOSS)
-
-Na raiz do projeto:
-
-```
-## 📦 Instalação de dependências (BOSS)
+## 📦 Instalar dependências (BOSS)
 
 Este projeto utiliza o **BOSS (Bora Open Source System)** como gerenciador de pacotes para Delphi.
 
@@ -99,7 +94,8 @@ Este comando irá baixar automaticamente todas as dependências necessárias do 
 
 ### 📌 Observação
 
-O arquivo BOSS.exe ja se encontra na pasta do projeto, porém caso você queira intalar o BOSS em sua máquina, ou queira obter mais informações sobre o gerenciador de pacotes, acesse o repositório oficial no GitHub:
+O arquivo **BOSS.exe já se encontra na pasta do projeto**.
+Caso deseje instalar globalmente ou obter mais informações, acesse:
 
 👉 https://github.com/HashLoad/boss
 
@@ -107,15 +103,15 @@ O arquivo BOSS.exe ja se encontra na pasta do projeto, porém caso você queira 
 
 ### ⚠️ Importante
 
-O comando `boss install` deve ser executado **dentro da pasta raiz do projeto**, onde se encontra o arquivo de configuração do BOSS.
-
-```
+O comando `boss install` deve ser executado **dentro da pasta raiz do projeto**.
 
 ---
 
-### 3. Configurar o banco de dados
+## 🗄️ Configuração do banco de dados
 
-Criar banco no PostgreSQL:
+### 3. Criar banco
+
+No PostgreSQL:
 
 ```
 RaizesDoNordesteDB
@@ -125,7 +121,7 @@ RaizesDoNordesteDB
 
 ### 4. Executar migrations
 
-Executar os arquivos da pasta:
+Execute os arquivos da pasta:
 
 ```
 db/migrations
@@ -142,9 +138,11 @@ V004__...
 
 ---
 
-### 5. Configurar `.env`
+## ⚙️ Configuração do ambiente
 
-Criar um arquivo `.env` na raiz:
+### 5. Criar arquivo `.env`
+
+Na raiz do projeto:
 
 ```
 API_PORT=9000
@@ -153,7 +151,7 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=RaizesDoNordesteDB
 DB_USER=postgres
-DB_PASSWORD=masterkey
+DB_PASSWORD=sua_senha
 
 JWT_SECRET=HORSE_API_TOP
 
@@ -162,7 +160,7 @@ APP_ENV=development
 
 ---
 
-### 6. Configurar DLLs do PostgreSQL
+## 📦 Configuração das DLLs do PostgreSQL
 
 As DLLs devem estar na pasta:
 
@@ -170,7 +168,7 @@ As DLLs devem estar na pasta:
 libs/
 ```
 
-O projeto já está configurado para carregar automaticamente via:
+O projeto já está configurado para carregá-las automaticamente via:
 
 ```
 SetDllDirectory(...)
@@ -180,7 +178,7 @@ SetDllDirectory(...)
 
 ## ▶️ Executando o projeto
 
-Abrir o projeto no Delphi e executar:
+Abra o projeto no Delphi e execute:
 
 ```
 Proj_RaizesDoNordesteAPI.dpr
@@ -194,11 +192,21 @@ Servidor: 9000
 
 ---
 
+## 🌐 Porta padrão
+
+A API roda em:
+
+```
+http://localhost:9000
+```
+
+---
+
 ## 🔐 Autenticação
 
-A API utiliza JWT.
+A API utiliza autenticação JWT.
 
-Fluxo:
+### Fluxo:
 
 1. `POST /signup`
 2. `POST /login`
@@ -222,7 +230,7 @@ http://localhost:9000/swagger
 
 ## 📦 Endpoints principais
 
-### Auth
+### 🔐 Auth
 
 * `POST /signup`
 * `POST /login`
@@ -230,7 +238,7 @@ http://localhost:9000/swagger
 
 ---
 
-### Produtos
+### 🛒 Produtos
 
 * `GET /produtos`
 * `POST /produtos`
@@ -238,7 +246,7 @@ http://localhost:9000/swagger
 
 ---
 
-### Pedidos
+### 📦 Pedidos
 
 * `GET /pedidos`
 * `POST /pedidos`
@@ -246,14 +254,14 @@ http://localhost:9000/swagger
 
 ---
 
-### Estoque
+### 📊 Estoque
 
 * `GET /estoque`
 * `POST /estoque/movimentar`
 
 ---
 
-### Pagamentos
+### 💳 Pagamentos
 
 * `POST /pagamentos`
 
@@ -294,6 +302,17 @@ Simulação de pagamento via endpoint:
 ```
 POST /pagamentos
 ```
+
+---
+
+## 🧪 Testes
+
+Recomenda-se utilizar ferramentas como:
+
+* Insomnia
+* Postman
+
+Para testar os endpoints da API utilizando o token JWT gerado no login.
 
 ---
 
