@@ -39,7 +39,10 @@ uses
   untPagamentoController in 'src\controllers\untPagamentoController.pas',
   untLogDAO in 'src\DAO\untLogDAO.pas',
   untLogService in 'src\services\untLogService.pas',
-  untSwaggerDocs in 'src\Swagger\untSwaggerDocs.pas';
+  untSwaggerDocs in 'src\Swagger\untSwaggerDocs.pas',
+  untFidelidadeDAO in 'src\DAO\untFidelidadeDAO.pas',
+  untFidelidadeService in 'src\services\untFidelidadeService.pas',
+  untFidelidadeController in 'src\controllers\untFidelidadeController.pas';
 
 begin
   try

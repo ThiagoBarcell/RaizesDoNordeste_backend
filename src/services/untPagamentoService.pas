@@ -5,7 +5,8 @@ interface
 uses
   System.JSON,
   System.StrUtils,
-  untLogService;
+  untLogService,
+  untFidelidadeService;
 
 type
   TPagamentoService = class
@@ -94,6 +95,10 @@ begin
       TPagamentoDAO.AtualizarStatusPedido(lPedidoId,lStatusPedido,lConnection);
 
       lConnection.Commit;
+
+      //Se o pagamento for aprovado e estiver tudo OK, gera o saldo fidelidade do cliente
+      if lStatusPagamento = STATUS_PAGAMENTO_APROVADO then
+        TFidelidadeService.CreditarPorPagamentoAprovado(pUsuarioId,lPedidoId,lValor);
 
       TLogService.GerarLog(pUsuarioId,'PROCESSAR_PAGAMENTO',ORI_PED_PEDIDO,
         lPedidoId,'Pagamento : ' + lStatusPagamento );

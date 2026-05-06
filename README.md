@@ -202,6 +202,8 @@ http://localhost:9000
 
 ---
 
+
+
 ## 🔐 Autenticação
 
 A API utiliza autenticação JWT.
@@ -260,6 +262,14 @@ http://localhost:9000/swagger
 
 ---
 
+### 🎁 Fidelidade
+
+* `GET /fidelidade`
+* `POST /fidelidade/consentimento`
+* `POST /fidelidade/resgatar`
+
+---
+
 ### 💳 Pagamentos
 
 * `POST /pagamentos`
@@ -301,6 +311,24 @@ Simulação de pagamento via endpoint:
 ```
 POST /pagamentos
 ```
+
+---
+
+## 🎁 Programa de Fidelidade
+
+O sistema possui um programa de fidelidade com controle de consentimento do usuário, atendendo aos cuidados mínimos relacionados à LGPD.
+
+Funcionalidades implementadas:
+
+* consulta de saldo de pontos
+* aceite/remoção de consentimento
+* resgate de pontos
+* crédito automático de pontos após pagamento aprovado
+* histórico de movimentações de pontos
+
+A regra adotada foi:
+
+1 real pago = 1 ponto
 
 ---
 

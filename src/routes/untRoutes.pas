@@ -12,7 +12,8 @@ uses
   untProdutoController,
   untPedidosController,
   untEstoqueController,
-  untPagamentoController;
+  untPagamentoController,
+  untFidelidadeController;
 
 // Aqui será feito o cadastro de todas as rotas
 procedure RegistrarRotas;
@@ -47,6 +48,12 @@ begin
 
   {$REGION 'Rotas de pagamento Mockado'}
   THorse.Post('/pagamentos',SolicitarPagamento);
+  {$ENDREGION}
+
+  {$REGION 'Fidelidade'}
+  THorse.Get('/fidelidade',ConsultarFidelidade);
+  THorse.Post('/fidelidade/consentimento', AtualizarConsentimentoFidelidade);
+  THorse.Post('/fidelidade/resgatar', ResgatarFidelidade);
   {$ENDREGION}
 end;
 

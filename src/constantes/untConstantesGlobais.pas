@@ -45,6 +45,7 @@ const
   TAG_SWAGGER_PEDIDOS = 'Pedidos';
   TAG_SWAGGER_ESTOQUE = 'Estoque';
   TAG_SWAGGER_PAGAMENTOS = 'Pagamentos';
+  TAG_SWAGGER_FIDELIDADE = 'Fidelidade';
 
 implementation
 

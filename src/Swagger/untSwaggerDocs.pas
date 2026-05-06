@@ -134,6 +134,20 @@ type
     property observacao: string read Fobservacao write Fobservacao;
   end;
 
+  TModelFidelidadeConsentimentoRequest = class
+  private
+    Fconsentimento: Boolean;
+  public
+    property consentimento: Boolean read Fconsentimento write Fconsentimento;
+  end;
+
+  TModelFidelidadeResgateRequest = class
+  private
+    Fpontos: Integer;
+  public
+    property pontos: Integer read Fpontos write Fpontos;
+  end;
+
 procedure DocumentacaoSwagger;
 
 implementation
@@ -347,6 +361,52 @@ begin
         .Schema(TModelErro)
       .&End
       .AddResponse(404, 'Erro')
+        .Schema(TModelErro)
+      .&End
+    .&End
+  .&End;
+  {$ENDREGION}
+
+  {$REGION 'Fidelidade'}
+  Swagger.Path('/fidelidade')
+    .Tag(TAG_SWAGGER_FIDELIDADE)
+    .GET('Consultar fidelidade', 'Consulta saldo e histórico de pontos do usuário autenticado')
+      .AddResponse(200, 'OK')
+      .&End
+      .AddResponse(401, 'Não autorizado')
+        .Schema(TModelErro)
+      .&End
+    .&End
+  .&End;
+
+  Swagger.Path('/fidelidade/consentimento')
+    .Tag(TAG_SWAGGER_FIDELIDADE)
+    .POST('Atualizar consentimento', 'Ativa ou remove o consentimento para o programa de fidelidade')
+      .AddParamBody('Consentimento', 'Dados do consentimento')
+        .Required(True)
+        .Schema(TModelFidelidadeConsentimentoRequest)
+      .&End
+      .AddResponse(200, 'OK')
+      .&End
+      .AddResponse(401, 'Não autorizado')
+        .Schema(TModelErro)
+      .&End
+    .&End
+  .&End;
+
+  Swagger.Path('/fidelidade/resgatar')
+    .Tag(TAG_SWAGGER_FIDELIDADE)
+    .POST('Resgatar pontos', 'Realiza o resgate de pontos do usuário autenticado')
+      .AddParamBody('Resgate', 'Quantidade de pontos para resgate')
+        .Required(True)
+        .Schema(TModelFidelidadeResgateRequest)
+      .&End
+      .AddResponse(200, 'OK')
+      .&End
+      .AddResponse(409, 'Pontos insuficientes')
+        .Schema(TModelErro)
+      .&End
+      .AddResponse(422, 'Pontos inválidos')
         .Schema(TModelErro)
       .&End
     .&End
