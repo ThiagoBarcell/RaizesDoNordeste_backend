@@ -1,10 +1,10 @@
-# 🌵 Raízes do Nordeste API
+#  Raízes do Nordeste API
 
 API REST desenvolvida em Delphi utilizando o framework Horse para gerenciamento de pedidos, produtos, estoque e pagamentos em uma rede de restaurantes.
 
 ---
 
-## 📌 Tecnologias utilizadas
+##  Tecnologias utilizadas
 
 * **Delphi 12 Community Edition**
 * **Horse Framework**
@@ -16,7 +16,7 @@ API REST desenvolvida em Delphi utilizando o framework Horse para gerenciamento 
 
 ---
 
-## ⚙️ Requisitos
+##  Requisitos
 
 Antes de executar o projeto, é necessário ter instalado:
 
@@ -27,7 +27,7 @@ Antes de executar o projeto, é necessário ter instalado:
 
 ---
 
-## 📁 Estrutura do projeto
+##  Estrutura do projeto
 
 ```
 src/
@@ -48,7 +48,7 @@ libs/
 
 ---
 
-## 🔧 Instalação
+##  Instalação
 
 ### 1. Clonar o repositório
 
@@ -58,11 +58,11 @@ git clone https://github.com/ThiagoBarcell/RaizesDoNordeste_backend.git
 
 ---
 
-## 📦 Instalar dependências (BOSS)
+##  Instalar dependências (BOSS)
 
 Este projeto utiliza o **BOSS** como gerenciador de pacotes para Delphi.
 
-### ▶️ Como instalar as dependências
+###  Como instalar as dependências
 
 1. Abra o **Prompt de Comando (CMD)** ou **PowerShell**
 2. Navegue até a pasta raiz do projeto:
@@ -92,22 +92,22 @@ Este comando irá baixar automaticamente todas as dependências necessárias do 
 
 ---
 
-### 📌 Observação
+###  Observação
 
 O arquivo **BOSS.exe já se encontra na pasta do projeto**.
 Caso deseje instalar globalmente ou obter mais informações, acesse:
 
-👉 https://github.com/HashLoad/boss
+ https://github.com/HashLoad/boss
 
 ---
 
-### ⚠️ Importante
+###  Importante
 
 O comando `boss install` deve ser executado **dentro da pasta raiz do projeto**.
 
 ---
 
-## 🗄️ Configuração do banco de dados
+##  Configuração do banco de dados
 
 ### 3. Criar banco
 
@@ -138,7 +138,7 @@ V004__...
 
 ---
 
-## ⚙️ Configuração do ambiente
+##  Configuração do ambiente
 
 ### 5. Criar arquivo `.env`
 
@@ -160,7 +160,7 @@ APP_ENV=development
 
 ---
 
-## 📦 Configuração das DLLs do PostgreSQL
+##  Configuração das DLLs do PostgreSQL
 
 As DLLs devem estar na pasta:
 
@@ -176,7 +176,7 @@ SetDllDirectory(...)
 
 ---
 
-## ▶️ Executando o projeto
+##  Executando o projeto
 
 Abra o projeto no Delphi e execute:
 
@@ -192,7 +192,7 @@ Servidor: 9000
 
 ---
 
-## 🌐 Porta padrão
+##  Porta padrão
 
 A API roda em:
 
@@ -204,7 +204,7 @@ http://localhost:9000
 
 
 
-## 🔐 Autenticação
+##  Autenticação
 
 A API utiliza autenticação JWT.
 
@@ -220,7 +220,7 @@ Authorization: Bearer SEU_TOKEN
 
 ---
 
-## 📘 Documentação Swagger
+##  Documentação Swagger
 
 Acesse:
 
@@ -230,16 +230,16 @@ http://localhost:9000/swagger
 
 ---
 
-## 📦 Endpoints principais
+##  Endpoints principais
 
-### 🔐 Auth
+###  Auth
 
 * `POST /signup`
 * `POST /login`
 
 ---
 
-### 🛒 Produtos
+###  Produtos
 
 * `GET /produtos`
 * `POST /produtos`
@@ -247,7 +247,7 @@ http://localhost:9000/swagger
 
 ---
 
-### 📦 Pedidos
+###  Pedidos
 
 * `GET /pedidos`
 * `POST /pedidos`
@@ -255,14 +255,14 @@ http://localhost:9000/swagger
 
 ---
 
-### 📊 Estoque
+###  Estoque
 
 * `GET /estoque`
 * `POST /estoque/movimentar`
 
 ---
 
-### 🎁 Fidelidade
+###  Fidelidade
 
 * `GET /fidelidade`
 * `POST /fidelidade/consentimento`
@@ -270,13 +270,13 @@ http://localhost:9000/swagger
 
 ---
 
-### 💳 Pagamentos
+###  Pagamentos
 
 * `POST /pagamentos`
 
 ---
 
-## 🔄 Fluxo do sistema
+##  Fluxo do sistema
 
 ```
 Cadastro → Login → Criar Pedido → Pagamento → Preparação → Entrega
@@ -284,7 +284,7 @@ Cadastro → Login → Criar Pedido → Pagamento → Preparação → Entrega
 
 ---
 
-## 📊 Controle de estoque
+##  Controle de estoque
 
 * Entrada
 * Saída
@@ -293,7 +293,7 @@ Cadastro → Login → Criar Pedido → Pagamento → Preparação → Entrega
 
 ---
 
-## 🧾 Logs de auditoria
+##  Logs de auditoria
 
 O sistema registra:
 
@@ -304,7 +304,7 @@ O sistema registra:
 
 ---
 
-## 💳 Pagamento (Mock)
+##  Pagamento (Mock)
 
 Simulação de pagamento via endpoint:
 
@@ -314,7 +314,7 @@ POST /pagamentos
 
 ---
 
-## 🎁 Programa de Fidelidade
+##  Programa de Fidelidade
 
 O sistema possui um programa de fidelidade com controle de consentimento do usuário, atendendo aos cuidados mínimos relacionados à LGPD.
 
@@ -332,7 +332,7 @@ A regra adotada foi:
 
 ---
 
-## 🧪 Testes
+##  Testes
 
 Recomenda-se utilizar ferramentas como:
 
@@ -341,24 +341,33 @@ Recomenda-se utilizar ferramentas como:
 
 Para testar os endpoints da API utilizando o token JWT gerado no login.
 
+
 ---
 
-## 🧠 Observações importantes
+##  Observações importantes
 
 * Separação em camadas (Controller / Service / DAO)
 * Controle de transição de status de pedidos
 * Validações de negócio implementadas
 
+* Perfis de Usuário (Roles)
+O sistema foi modelado com suporte aos seguintes perfis de acesso:
+Role	Descrição
+ADMIN	Administração geral do sistema
+CLIENTE	Usuário final responsável pelos pedidos
+ATENDENTE	Funcionário do balcão
+COZINHA	Responsável pela preparação dos pedidos
+
 ---
 
-## 👨‍💻 Autor
+##  Autor
 
 Thiago Barcellos
 RU: 4673653
 
 ---
 
-## 📌 Considerações finais
+##  Considerações finais
 
 Este projeto atende aos requisitos propostos no trabalho, incluindo:
 
@@ -369,5 +378,6 @@ Este projeto atende aos requisitos propostos no trabalho, incluindo:
 * Logs de auditoria
 * Documentação Swagger
 * Estrutura organizada e escalável
+
 
 ---

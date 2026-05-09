@@ -1,7 +1,9 @@
 INSERT INTO roles (nome) VALUES
 ('ADMIN'),
 ('GERENTE'),
-('CLIENTE');
+('CLIENTE'),
+('ATENDENTE'),
+('COZINHA');
 
 INSERT INTO unidades (nome, endereco, ativo) VALUES
 ('Unidade Centro', 'Rua Principal, 100', TRUE),
