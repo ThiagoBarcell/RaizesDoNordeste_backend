@@ -103,7 +103,7 @@ begin
     if not TBCrypt.CompareHash(lSenha, lUsuario.Senha) then
       raise Exception.Create('senha_incorreta');
 
-    lToken := GerarToken(lUsuario.Id, lUsuario.Email);
+    lToken := GerarToken(lUsuario.Id, lUsuario.Email, lUsuario.RoleId);
 
     Result := TJSONObject.Create;
     Result.AddPair('accessToken', lToken);

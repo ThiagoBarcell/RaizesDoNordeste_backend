@@ -362,7 +362,7 @@ COZINHA	Responsável pela preparação dos pedidos
 
 ##  Autor
 
-Thiago Barcellos
+Thiago Afonso Barcelos
 RU: 4673653
 
 ---

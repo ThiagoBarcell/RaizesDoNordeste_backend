@@ -72,6 +72,7 @@ class function TPedidoService.CriarPedido(const pUsuarioId: Integer; const pBody
 var
   lUnidadeId, lQuantidadeAnterior, lQuantidadeAtual : Integer;
   lCanalPedido: string;
+  lFormaPagamento: string;
   lItens: TJSONArray;
   lItem: TJSONValue;
   lItemObj: TJSONObject;
@@ -86,6 +87,11 @@ begin
   lUnidadeId := pBody.GetValue<Integer>('unidadeId', 0);
   lCanalPedido := Trim(UpperCase(pBody.GetValue<string>('canalPedido', '')));
   lItens := pBody.GetValue<TJSONArray>('itens');
+  lFormaPagamento := Trim(UpperCase(pBody.GetValue<string>('formaPagamento', 'MOCK')));
+
+  //Coloquei para fazer uma validação de pagamento simples, como só tem "mock", dai eu deixei assim
+  if lFormaPagamento <> 'MOCK' then
+    raise Exception.Create('forma_pagamento_invalida_UTILIZE:MOCK');
 
   if (pUsuarioId <= 0) then
     raise Exception.Create('usuario_invalido');
@@ -140,7 +146,7 @@ begin
   //Iniciei a transação para o cached update, caso de algo errado o rollback é geral
   lConnection.StartTransaction;
   try
-    lPedidoId := TPedidoDAO.InserirPedido(pUsuarioId, lUnidadeId, lCanalPedido, lTotal, lConnection);
+    lPedidoId := TPedidoDAO.InserirPedido(pUsuarioId, lUnidadeId, lCanalPedido, lTotal,lFormaPagamento, lConnection);
 
     for lItem in lItens do
     begin
@@ -151,16 +157,16 @@ begin
       lQuantidade := lItemObj.GetValue<Integer>('quantidade', 0);
       lPrecoUnitario := TPedidoDAO.ObterPrecoProduto(lProdutoId);
 
-      TPedidoDAO.InserirPedidoItem(lPedidoId, lProdutoId, lQuantidade, lPrecoUnitario, lConnection);
-      //Aqui eu ajusto a diferença de estoque
-      TPedidoDAO.BaixarEstoque(lProdutoId, lUnidadeId, lQuantidade, lConnection);
-
       //Aqui to fazendo o calculo do estoque com o anterior para gravar a movimentação
       lQuantidadeAnterior := TEstoqueDAO.ObterSaldo(lProdutoId, lUnidadeId);
       lQuantidadeAtual := lQuantidadeAnterior - lQuantidade;
 
+      TPedidoDAO.InserirPedidoItem(lPedidoId, lProdutoId, lQuantidade, lPrecoUnitario, lConnection);
+      //Aqui eu ajusto a diferença de estoque
+      TPedidoDAO.BaixarEstoque(lProdutoId, lUnidadeId, lQuantidade, lConnection);
+
       TEstoqueDAO.RegistrarMovimentacao( lProdutoId, lUnidadeId, pUsuarioId,
-        MOV_TIPO_BAIXA_PEDIDO, ORI_PED_PEDIDO, lQuantidade, lQuantidadeAnterior, lQuantidadeAtual,
+        MOV_TIPO_BAIXA_PEDIDO, ORI_PED_PEDIDO, lQuantidade, lEstoqueDisponivel, lQuantidadeAtual,
         'Baixa feita pelo pedido : ' + IntToStr(lPedidoId));
     end;
 

@@ -47,6 +47,13 @@ const
   TAG_SWAGGER_PAGAMENTOS = 'Pagamentos';
   TAG_SWAGGER_FIDELIDADE = 'Fidelidade';
 
+  //Roles do sistema
+  ROLE_ADMIN = 1;
+  ROLE_CLIENTE = 2;
+  ROLE_GERENTE = 3;
+  ROLE_ATENDENTE = 4;
+  ROLE_COZINHA = 5;
+
 implementation
 
 end.

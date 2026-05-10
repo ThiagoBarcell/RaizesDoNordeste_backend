@@ -1,7 +1,7 @@
 INSERT INTO roles (nome) VALUES
 ('ADMIN'),
-('GERENTE'),
 ('CLIENTE'),
+('GERENTE'),
 ('ATENDENTE'),
 ('COZINHA');
 

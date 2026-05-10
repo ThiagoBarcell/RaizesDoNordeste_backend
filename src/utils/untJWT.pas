@@ -2,7 +2,7 @@ unit untJWT;
 
 interface
 
-function GerarToken(const pUserId: Integer; const pEmail: string): string;
+function GerarToken(const pUserId: Integer; const pEmail: string; const pRoleID : Integer): string;
 
 implementation
 
@@ -18,7 +18,7 @@ uses
   JOSE.Builder,
   untEnv;
 
-function GerarToken(const pUserId: Integer; const pEmail: string): string;
+function GerarToken(const pUserId: Integer; const pEmail: string; const pRoleID : Integer): string;
 var
   lJWT: TJWT;
 begin
@@ -28,6 +28,7 @@ begin
     lJWT.Claims.IssuedAt := Now;
     lJWT.Claims.Subject := IntToStr(pUserId);
     lJWT.Claims.SetClaimOfType<string>('email', pEmail);
+    lJWT.Claims.SetClaimOfType<Integer>('roleId', pRoleID);
 
     Result := TJOSE.SHA256CompactToken(TEnv.LerEnvPorChave('JWT_SECRET'), lJWT);
   finally

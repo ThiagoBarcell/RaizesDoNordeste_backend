@@ -22,7 +22,7 @@ type
     class function ObterPrecoProduto(const pProdutoId: Integer): Double;
     class function ObterEstoque(const pProdutoId, pUnidadeId: Integer): Integer;
     class function InserirPedido( const pUsuarioId, pUnidadeId: Integer; const pCanalPedido: string;
-      const pTotal: Double; const pConnection: TFDConnection): Integer;
+      const pTotal: Double;const pFormaPagamento : string; const pConnection: TFDConnection): Integer;
     class procedure InserirPedidoItem( const pPedidoId, pProdutoId, pQuantidade: Integer;
       const pPrecoUnitario: Double; const pConnection: TFDConnection );
     class procedure BaixarEstoque( const pProdutoId, pUnidadeId, pQuantidade: Integer;
@@ -157,7 +157,7 @@ end;
 
 
 class function TPedidoDAO.InserirPedido(   const pUsuarioId, pUnidadeId: Integer; const pCanalPedido: string;
-  const pTotal: Double; const pConnection: TFDConnection ): Integer;
+  const pTotal: Double; const pFormaPagamento : string; const pConnection: TFDConnection ): Integer;
 var
   lQry: TFDQuery;
 begin
@@ -166,8 +166,8 @@ begin
 
     lQry.Connection := pConnection;
     lQry.SQL.Text :=
-      'INSERT INTO pedidos (usuario_id, unidade_id, canal_pedido, status, total) ' +
-      'VALUES (:usuario_id, :unidade_id, :canal_pedido, :status, :total) ' +
+      'INSERT INTO pedidos (usuario_id, unidade_id, canal_pedido, status, total, forma_pagamento) ' +
+      'VALUES (:usuario_id, :unidade_id, :canal_pedido, :status, :total, :forma_pagamento) ' +
       'RETURNING id';
 
     lQry.ParamByName('usuario_id').AsInteger := pUsuarioId;
@@ -175,6 +175,7 @@ begin
     lQry.ParamByName('canal_pedido').AsString := pCanalPedido;
     lQry.ParamByName('status').AsString := STATUS_PED_AGUARDANDO_PAGAMENTO; //Status padrão pro pedido que foi criado agora
     lQry.ParamByName('total').AsFloat := pTotal;
+    lQry.ParamByName('forma_pagamento').AsString := pFormaPagamento;
 
     lQry.Open;
     Result := lQry.FieldByName('id').AsInteger;
