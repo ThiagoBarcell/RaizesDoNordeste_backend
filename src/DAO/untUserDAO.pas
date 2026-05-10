@@ -16,7 +16,7 @@ type
     class function InsertUser(const ANome, AEmail, ASenhaHash: string; ARoleId: Integer): Integer;
     class function GetUserByEmail(const pEmail: string): TUsuario; //Metodo para validar o usuário e ja retornar o modelo
     class function GetUserById(const pId: Integer): TUsuario;
-
+    class function GetRoleIdByUserId(const pUsuarioId: Integer): Integer;
   end;
 
 implementation
@@ -43,6 +43,30 @@ begin
 
     //Se a query não está vazia ou seja se encontrou algum registro
     Result := not lQry.IsEmpty;
+  finally
+    lQry.Free;
+  end;
+end;
+
+class function TUserDAO.GetRoleIdByUserId(const pUsuarioId: Integer): Integer;
+var
+  lQry: TFDQuery;
+begin
+  Result := 0;
+
+  lQry := TFDQuery.Create(nil);
+  try
+    lQry.Connection := TConectarBD.GetConnection;
+    lQry.SQL.Text :=
+      'SELECT role_id ' +
+      'FROM usuarios ' +
+      'WHERE id = :id';
+
+    lQry.ParamByName('id').AsInteger := pUsuarioId;
+    lQry.Open;
+
+    if not lQry.IsEmpty then
+      Result := lQry.FieldByName('role_id').AsInteger;
   finally
     lQry.Free;
   end;

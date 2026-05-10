@@ -84,10 +84,12 @@ type
     FunidadeId: Integer;
     FcanalPedido: string;
     Fitens: TObjectList<TModelPedidoItem>;
+    FformaPagamento : string;
   public
     property unidadeId: Integer read FunidadeId write FunidadeId;
     property canalPedido: string read FcanalPedido write FcanalPedido;
     property itens: TObjectList<TModelPedidoItem> read Fitens write Fitens;
+    property formaPagamento: string read FformaPagamento write FformaPagamento;
   end;
 
   TModelPagamentoRequest = class
@@ -269,6 +271,9 @@ begin
           STATUS_PED_CANCELADO + ', ' + STATUS_PAGAMENTO_APROVADO + ', ' + STATUS_PAGAMENTO_RECUSADO )
     .&End
       .AddResponse(200, 'OK')
+    .&End
+    .AddResponse(500, 'Erro interno')
+        .Schema(TModelErro)
     .&End;
 
     Swagger.Path('/pedidos')

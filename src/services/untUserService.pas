@@ -20,7 +20,8 @@ uses
   BCrypt,
   untUserDAO,
   untModeloUsuario,
-  untJWT;
+  untJWT,
+  untConstantesGlobais;
 
 class function TUserService.Signup(const pBody: TJSONObject): TJSONObject;
 var
@@ -50,7 +51,7 @@ begin
   lSenhaHash := TBCrypt.GenerateHash(lSenha, 10);
 
   // role_id = 2 que seria CLIENTE no seed
-  lUserId := TUserDAO.InsertUser(lNome, lEmail, lSenhaHash, 2);
+  lUserId := TUserDAO.InsertUser(lNome, lEmail, lSenhaHash, ROLE_CLIENTE);
 
   Result := TJSONObject.Create;
   Result.AddPair('id', TJSONNumber.Create(lUserId));

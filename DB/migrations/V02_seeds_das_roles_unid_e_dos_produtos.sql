@@ -5,6 +5,19 @@ INSERT INTO roles (nome) VALUES
 ('ATENDENTE'),
 ('COZINHA');
 
+INSERT INTO usuarios (
+    nome,
+    email,
+    senha,
+    role_id
+)
+VALUES (
+    'ADMIN',
+    'ADMIN',
+    '$2y$10$zdkBQXIB2Ag/qyP66T7Tc.uaCoySdN/ZtNWT5DofycPtOWVmxd4aa',
+    1
+);
+
 INSERT INTO unidades (nome, endereco, ativo) VALUES
 ('Unidade Centro', 'Rua Principal, 100', TRUE),
 ('Unidade Shopping', 'Av. Central, 500', TRUE);
