@@ -1,0 +1,587 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: RaizesDoNordeste
+meta:
+  id: wrk_a899dea5a4f14911b3658a13af818a65
+  created: 1776391034883
+  modified: 1777088670912
+  description: ""
+collection:
+  - name: Usuario
+    meta:
+      id: fld_ff66175b4d004cc3a6a9dd5350862e5b
+      created: 1777148795281
+      modified: 1777148795281
+      sortKey: -1777148795281
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/signup"
+        name: Criar_Usuario
+        meta:
+          id: req_058e7fcae57e48eba0aa3af501f65cb8
+          created: 1777132447758
+          modified: 1778360353322
+          isPrivate: false
+          description: ""
+          sortKey: -1777148803119
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome":"Thiago RU4673653",
+            	"email":"thiaguu@gmail.com",
+            	"senha":"123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/login"
+        name: Login_Usuario
+        meta:
+          id: req_63c11e6c326343ceb1aed862521c22d3
+          created: 1777148778362
+          modified: 1778453300974
+          isPrivate: false
+          description: ""
+          sortKey: -1777148803019
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email":"thiaguu@gmail.com",
+            	"senha":"123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Produtos
+    meta:
+      id: fld_676050f7836f4818b00d20e30e1c4884
+      created: 1777159215868
+      modified: 1777159221305
+      sortKey: -1777159215868
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/produtos"
+        name: Listar_Produtos
+        meta:
+          id: req_3736117b43af4f85902c9207f3cfca3f
+          created: 1777148915341
+          modified: 1777950750343
+          isPrivate: false
+          description: ""
+          sortKey: -1777159228994
+        method: GET
+        parameters:
+          - name: id
+            value: "0"
+            description: ""
+            disabled: false
+          - name: status
+            value: ativos
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/produtos"
+        name: Cadastrar_Produtos
+        meta:
+          id: req_bd6e6f6646c14142aa05814c1d4d41f2
+          created: 1777149021358
+          modified: 1778454422360
+          isPrivate: false
+          description: ""
+          sortKey: -1777159228894
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome":"PRODUTO DE TESTE",
+            	"descricao":"TESTANDO INSERT SEM PERMISSAO",
+            	"preco":"403",
+            	"ativo":"True"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: true
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/produtos"
+        name: Atualizar_Produtos
+        meta:
+          id: req_1d26fbe099574fc890b4e8526823df4e
+          created: 1777333216970
+          modified: 1778361500238
+          isPrivate: false
+          description: ""
+          sortKey: -1777154016006.5
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome":"Teste Update",
+            	"descricao":"lanche de testes",
+            	"preco":"223",
+            	"ativo":"True"
+            }
+        parameters:
+          - name: id
+            value: "14444"
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Pedidos
+    meta:
+      id: fld_84b55a8bd80546a59b5812832189d2d8
+      created: 1777159237994
+      modified: 1777159237994
+      sortKey: -1777159237994
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/pedidos"
+        name: Criar_Pedido
+        meta:
+          id: req_d8de02964eae4ab2ac1ec5db98147ec9
+          created: 1777159243594
+          modified: 1778453474095
+          isPrivate: false
+          description: ""
+          sortKey: -1777332884362
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "unidadeId": 1,
+              "canalPedido": "WEB",
+              "itens": [
+                {
+                  "produtoId": 1,
+                  "quantidade": 1
+                },
+                {
+                  "produtoId": 2,
+                  "quantidade": 1
+                }
+              ],
+            	"formaPagamento":"MOCK"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        authentication:
+          type: none
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/pedidos"
+        name: ListarPedidos
+        meta:
+          id: req_dc1a1f7cccc24f75b3eb3c2d15242752
+          created: 1777332901025
+          modified: 1777950787881
+          isPrivate: false
+          description: ""
+          sortKey: -1777332884462
+        method: GET
+        parameters:
+          - name: id
+            value: "0"
+            description: ""
+            disabled: false
+          - name: canalPedido
+            value: WEB
+            description: ""
+            disabled: false
+          - name: status
+            value: AGUARDANDO_PAGAMENTO
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/pedidos/6/status"
+        name: AtualizarStatusPedido
+        meta:
+          id: req_f4a365ab5aa242ffa4e7bb8d7a19b34c
+          created: 1777680070793
+          modified: 1778453919514
+          isPrivate: false
+          description: ""
+          sortKey: -1777332884412
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "status": "EM_PREPARO"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Estoque
+    meta:
+      id: fld_3e03745602eb44619138a38ce019ebde
+      created: 1777334368629
+      modified: 1777334368629
+      sortKey: -1777334368629
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/estoque/movimentar"
+        name: Atualizar_Estoque
+        meta:
+          id: req_9ca64b8ec45c47a5880965d0419fec2d
+          created: 1777334477529
+          modified: 1777950800917
+          isPrivate: false
+          description: ""
+          sortKey: -1777334485993
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "produtoId": 1,
+              "unidadeId": 1,
+              "tipo": "ENTRADA",
+              "quantidade": 10,
+              "observacao": "Reposição de estoque"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/estoque"
+        name: Listar_Estoque
+        meta:
+          id: req_8c446e7fd61c4426baef30e9c5b7e9d6
+          created: 1777341062815
+          modified: 1777950810240
+          isPrivate: false
+          description: ""
+          sortKey: -1777334486093
+        method: GET
+        parameters:
+          - name: produtoId
+            value: "0"
+            description: ""
+            disabled: false
+          - name: unidadeId
+            value: "0"
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Pagamento
+    meta:
+      id: fld_54d75c1442c24c259b225f8e3a1af668
+      created: 1777505857130
+      modified: 1777505857130
+      sortKey: -1777505857130
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/pagamentos"
+        name: Pagamento
+        meta:
+          id: req_9651d4af6830426ab0eb18b0bb524d3c
+          created: 1777505861015
+          modified: 1778453889631
+          isPrivate: false
+          description: ""
+          sortKey: -1777507983135
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "pedidoId": 6,
+              "aprovado": true
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Fidelidade
+    meta:
+      id: fld_f1430050330b4773b7edd0b5ec2073f1
+      created: 1777998827165
+      modified: 1777998827165
+      sortKey: -1777998827165
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/fidelidade"
+        name: Consulta Fidelidade
+        meta:
+          id: req_8a0c24f94eb741fa806c359b54a08b9a
+          created: 1777998831070
+          modified: 1777998952451
+          isPrivate: false
+          description: ""
+          sortKey: -1777998899844
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/fidelidade/consentimento"
+        name: Fidelidade Consentimento
+        meta:
+          id: req_9364b3aa9cae450a91af48fd6dfa7f92
+          created: 1777998862898
+          modified: 1777999314148
+          isPrivate: false
+          description: ""
+          sortKey: -1777998899644
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"consentimento":true
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/fidelidade/resgatar"
+        name: Resgatar Fidelidade
+        meta:
+          id: req_81f1b3e0dded45b8b93391d322989aff
+          created: 1777998892424
+          modified: 1777999047853
+          isPrivate: false
+          description: ""
+          sortKey: -1777998899744
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"pontos":"56"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_6d7a58d082f03fa2b80f1ed84ef0cde3a13545fb
+    created: 1777088670947
+    modified: 1777088670947
+environments:
+  name: Base Environment
+  meta:
+    id: env_6d7a58d082f03fa2b80f1ed84ef0cde3a13545fb
+    created: 1776391034884
+    modified: 1778453707020
+    isPrivate: false
+  data:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04
+    base_url: http://localhost:9000

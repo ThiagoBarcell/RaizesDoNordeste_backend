@@ -50,9 +50,8 @@ const
   //Roles do sistema
   ROLE_ADMIN = 1;
   ROLE_CLIENTE = 2;
-  ROLE_GERENTE = 3;
-  ROLE_ATENDENTE = 4;
-  ROLE_COZINHA = 5;
+  ROLE_ATENDENTE = 3;
+  ROLE_COZINHA = 4;
 
 implementation
 
