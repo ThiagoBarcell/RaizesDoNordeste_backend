@@ -44,7 +44,25 @@ db/
  └── migrations
 libs/
  └── (DLLs do PostgreSQL)
+docs/
+ └── (prints dos diagramas)
+tests/ 
+ └── (collection insomnia das requisições)
 ```
+
+## Arquivos de apoio
+
+A collection do Insomnia está disponível em:
+
+tests/RaizesDoNordeste_Insomnia_Collection.json
+
+Os diagramas do projeto estão disponíveis em:
+
+docs/diagramas_raizes_do_nordeste.drawio
+
+As migrations estão disponíveis em:
+
+db/migrations
 
 ---
 
@@ -130,10 +148,11 @@ db/migrations
 Na ordem:
 
 ```
-V001__...
-V002__...
-V003__...
-V004__...
+V01_...
+V02_...
+V03_...
+V04_...
+V05_...
 ```
 
 ---
@@ -218,6 +237,15 @@ A API utiliza autenticação JWT.
 Authorization: Bearer SEU_TOKEN
 ```
 
+## Usuário administrador padrão
+
+Após executar as seeds, o sistema possui um usuário administrador para testes:
+
+E-mail: ADMIN 
+Senha: 1
+
+Esse usuário possui perfil ADMIN e pode acessar rotas administrativas, como cadastro de produtos e movimentação de estoque.
+
 ---
 
 ##  Documentação Swagger
@@ -243,7 +271,7 @@ http://localhost:9000/swagger
 
 * `GET /produtos`
 * `POST /produtos`
-* `PUT /produtos/{id}`
+* `PUT /produtos`
 
 ---
 
@@ -279,7 +307,7 @@ http://localhost:9000/swagger
 ##  Fluxo do sistema
 
 ```
-Cadastro → Login → Criar Pedido → Pagamento → Preparação → Entrega
+Cadastro → Login → Criar Produto → Ajustar Estoque → Criar Pedido → Pagamento Mock → Fidelidade → Atualizar Status → Entrega
 ```
 
 ---
