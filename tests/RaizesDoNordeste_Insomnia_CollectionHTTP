@@ -1,0 +1,1075 @@
+{
+	"log": {
+		"version": "1.2",
+		"creator": {
+			"name": "Insomnia REST Client",
+			"version": "insomnia.desktop.app:v12.5.0"
+		},
+		"entries": [
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 25.177999999999997,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:9000/fidelidade",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "OK",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "374"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 10 May 2026 22:58:56 GMT"
+						}
+					],
+					"content": {
+						"size": 374,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "{\"usuarioId\":2,\"pontos\":114,\"consentimento\":true,\"atualizadoEm\":\"2026-05-10 19:58:10\",\"historico\":[{\"id\":2,\"tipo\":\"CREDITO\",\"pontos\":57,\"descricao\":\"Crédito gerado pelo pagamento aprovado do pedido 6\",\"criadoEm\":\"2026-05-10 19:58:10\"},{\"id\":1,\"tipo\":\"CREDITO\",\"pontos\":57,\"descricao\":\"Crédito gerado pelo pagamento aprovado do pedido 5\",\"criadoEm\":\"2026-05-10 19:56:04\"}]}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 25.177999999999997,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Consulta Fidelidade"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 17.951999999999998,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:9000/fidelidade/resgatar",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"pontos\":\"56\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 409,
+					"statusText": "Conflict",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "87"
+						},
+						{
+							"name": "Date",
+							"value": "Tue, 05 May 2026 16:39:51 GMT"
+						}
+					],
+					"content": {
+						"size": 87,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "{\"error\":\"PONTOS_INSUFICIENTES\",\"message\":\"Saldo de pontos insuficiente para resgate.\"}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 17.951999999999998,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Resgatar Fidelidade"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 3.972,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:9000/fidelidade/consentimento",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"consentimento\":true\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "OK",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "36"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 10 May 2026 22:55:47 GMT"
+						}
+					],
+					"content": {
+						"size": 36,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "{\"usuarioId\":2,\"consentimento\":true}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 3.972,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Fidelidade Consentimento"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 21.573999999999998,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:9000/pagamentos",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n  \"pedidoId\": 6,\n  \"aprovado\": true\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 201,
+					"statusText": "Created",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "175"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 10 May 2026 22:58:10 GMT"
+						}
+					],
+					"content": {
+						"size": 175,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "{\"pedidoId\":6,\"pagamentoStatus\":\"APROVADO\",\"pedidoStatus\":\"PAGO\",\"valor\":57.0,\"RetornoMock\":{\"provedor\":\"MOCK\",\"status\":\"APROVADO\",\"mensagem\":\"Pagamento aprovado pelo mock.\"}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 21.573999999999998,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Pagamento"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 2.124,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:9000/estoque",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [
+						{
+							"name": "produtoId",
+							"value": "0"
+						},
+						{
+							"name": "unidadeId",
+							"value": "0"
+						}
+					],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "OK",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "844"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 10 May 2026 22:59:22 GMT"
+						}
+					],
+					"content": {
+						"size": 844,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "[{\"produtoId\":3,\"produto\":\"Batata Frita Média\",\"unidadeId\":1,\"unidade\":\"Unidade Centro\",\"quantidade\":40},{\"produtoId\":2,\"produto\":\"Cheeseburger Bacon\",\"unidadeId\":1,\"unidade\":\"Unidade Centro\",\"quantidade\":12},{\"produtoId\":1,\"produto\":\"Hamburguer Clássico\",\"unidadeId\":1,\"unidade\":\"Unidade Centro\",\"quantidade\":0},{\"produtoId\":4,\"produto\":\"Refrigerante Lata\",\"unidadeId\":1,\"unidade\":\"Unidade Centro\",\"quantidade\":50},{\"produtoId\":3,\"produto\":\"Batata Frita Média\",\"unidadeId\":2,\"unidade\":\"Unidade Shopping\",\"quantidade\":35},{\"produtoId\":2,\"produto\":\"Cheeseburger Bacon\",\"unidadeId\":2,\"unidade\":\"Unidade Shopping\",\"quantidade\":15},{\"produtoId\":1,\"produto\":\"Hamburguer Clássico\",\"unidadeId\":2,\"unidade\":\"Unidade Shopping\",\"quantidade\":25},{\"produtoId\":4,\"produto\":\"Refrigerante Lata\",\"unidadeId\":2,\"unidade\":\"Unidade Shopping\",\"quantidade\":45}]"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 2.124,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Listar_Estoque"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 5.602,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:9000/estoque/movimentar",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [
+						{
+							"name": "",
+							"value": ""
+						}
+					],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n  \"produtoId\": 1,\n  \"unidadeId\": 1,\n  \"tipo\": \"ENTRADA\",\n  \"quantidade\": 10,\n  \"observacao\": \"Reposição de estoque\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 201,
+					"statusText": "Created",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "145"
+						},
+						{
+							"name": "Date",
+							"value": "Sat, 02 May 2026 20:00:49 GMT"
+						}
+					],
+					"content": {
+						"size": 145,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "{\"produtoId\":1,\"unidadeId\":1,\"tipo\":\"ENTRADA\",\"quantidade\":10,\"quantidadeAnterior\":42,\"quantidadeAtual\":52,\"observacao\":\"Reposição de estoque\"}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 5.602,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Atualizar_Estoque"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 1.508,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:9000/pedidos",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [
+						{
+							"name": "id",
+							"value": "0"
+						},
+						{
+							"name": "canalPedido",
+							"value": "WEB"
+						},
+						{
+							"name": "status",
+							"value": "AGUARDANDO_PAGAMENTO"
+						}
+					],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 401,
+					"statusText": "Unauthorized",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "12"
+						},
+						{
+							"name": "Date",
+							"value": "Tue, 05 May 2026 01:24:05 GMT"
+						}
+					],
+					"content": {
+						"size": 12,
+						"mimeType": "text/html; charset=utf-8",
+						"text": "Unauthorized"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 1.508,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "ListarPedidos"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 4.132000000000001,
+				"request": {
+					"method": "PATCH",
+					"url": "http://localhost:9000/pedidos/6/status",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [
+						{
+							"name": "",
+							"value": ""
+						}
+					],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n  \"status\": \"EM_PREPARO\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "OK",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "65"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 10 May 2026 22:58:40 GMT"
+						}
+					],
+					"content": {
+						"size": 65,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "{\"pedidoId\":6,\"statusAnterior\":\"PAGO\",\"statusAtual\":\"EM_PREPARO\"}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 4.132000000000001,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "AtualizarStatusPedido"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 35.221000000000004,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:9000/pedidos",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n  \"unidadeId\": 1,\n  \"canalPedido\": \"WEB\",\n  \"itens\": [\n    {\n      \"produtoId\": 1,\n      \"quantidade\": 1\n    },\n    {\n      \"produtoId\": 2,\n      \"quantidade\": 1\n    }\n  ],\n\t\"formaPagamento\":\"MOCK\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 201,
+					"statusText": "Created",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "79"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 10 May 2026 22:57:43 GMT"
+						}
+					],
+					"content": {
+						"size": 79,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "{\"pedidoId\":6,\"status\":\"AGUARDANDO_PAGAMENTO\",\"canalPedido\":\"WEB\",\"total\":57.0}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 35.221000000000004,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Criar_Pedido"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 1.778,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:9000/produtos",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [
+						{
+							"name": "id",
+							"value": "0"
+						},
+						{
+							"name": "status",
+							"value": "ativos"
+						}
+					],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "OK",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "397"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 10 May 2026 21:20:39 GMT"
+						}
+					],
+					"content": {
+						"size": 397,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "[{\"id\":1,\"nome\":\"Hamburguer Clássico\",\"descricao\":\"Pão, carne e queijo\",\"preco\":25.0,\"ativo\":true},{\"id\":2,\"nome\":\"Cheeseburger Bacon\",\"descricao\":\"Pão, carne, queijo e bacon\",\"preco\":32.0,\"ativo\":true},{\"id\":3,\"nome\":\"Batata Frita Média\",\"descricao\":\"Porção média de batata frita\",\"preco\":15.0,\"ativo\":true},{\"id\":4,\"nome\":\"Refrigerante Lata\",\"descricao\":\"350ml\",\"preco\":8.0,\"ativo\":true}]"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 1.778,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Listar_Produtos"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 2.317,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:9000/produtos",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [
+						{
+							"name": "",
+							"value": ""
+						}
+					],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"nome\":\"PRODUTO DE TESTE\",\n\t\"descricao\":\"TESTANDO INSERT SEM PERMISSAO\",\n\t\"preco\":\"403\",\n\t\"ativo\":\"True\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 401,
+					"statusText": "Unauthorized",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "15"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 10 May 2026 23:07:08 GMT"
+						}
+					],
+					"content": {
+						"size": 15,
+						"mimeType": "text/html; charset=utf-8",
+						"text": "Token not found"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 2.317,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Cadastrar_Produtos"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 26.591,
+				"request": {
+					"method": "PUT",
+					"url": "http://localhost:9000/produtos",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Authorization",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [
+						{
+							"name": "id",
+							"value": "14444"
+						}
+					],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"nome\":\"Teste Update\",\n\t\"descricao\":\"lanche de testes\",\n\t\"preco\":\"223\",\n\t\"ativo\":\"True\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 404,
+					"statusText": "Not Found",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "close"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "71"
+						},
+						{
+							"name": "Date",
+							"value": "Sat, 09 May 2026 21:18:21 GMT"
+						}
+					],
+					"content": {
+						"size": 71,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "{\"error\":\"PRODUTO_NAO_ENCONTRADO\",\"message\":\"Produto não encontrado.\"}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 26.591,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Atualizar_Produtos"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 2.3489999999999998,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:9000/signup",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [
+						{
+							"name": "",
+							"value": ""
+						}
+					],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"nome\":\"Thiago RU4673653\",\n\t\"email\":\"thiaguu@gmail.com\",\n\t\"senha\":\"123456\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 409,
+					"statusText": "Conflict",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "79"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 10 May 2026 22:48:09 GMT"
+						}
+					],
+					"content": {
+						"size": 79,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "{\"error\":\"EMAIL_EXISTENTE\",\"message\":\"Já existe um usuário com este e-mail.\"}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 2.3489999999999998,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Criar_Usuario"
+			},
+			{
+				"startedDateTime": "2026-05-10T23:43:39.326Z",
+				"time": 104.647,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:9000/login",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/12.5.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"email\":\"thiaguu@gmail.com\",\n\t\"senha\":\"123456\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "OK",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "313"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 10 May 2026 22:54:57 GMT"
+						}
+					],
+					"content": {
+						"size": 313,
+						"mimeType": "application/json; charset=UTF-8",
+						"text": "{\"accessToken\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Nzg1NDAwOTcsImlhdCI6MTc3ODQ1MzY5Nywic3ViIjoiMiIsImVtYWlsIjoidGhpYWd1dUBnbWFpbC5jb20iLCJyb2xlSWQiOjJ9.gsK3zAp7kHG6qYbH00HCy-7zkmDj8Mc7zw98rboxe04\",\"tokenType\":\"Bearer\",\"user\":{\"id\":2,\"nome\":\"Thiago RU4673653\",\"email\":\"thiaguu@gmail.com\",\"roleId\":2}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 104.647,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Login_Usuario"
+			}
+		]
+	}
+}
